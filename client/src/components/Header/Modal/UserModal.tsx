@@ -27,6 +27,7 @@ const Overlay = styled.div`
 `;
 const Btn = styled.div`
   margin: 5px;
+  text-align: center;
 `;
 
 function UserModal() {
