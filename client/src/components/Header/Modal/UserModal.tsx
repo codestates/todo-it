@@ -30,7 +30,16 @@ const Btn = styled.div`
   text-align: center;
 `;
 
-function UserModal() {
+interface Props {
+  userModal: boolean;
+  setUserModal(value: boolean): void;
+}
+
+function UserModal({ userModal, setUserModal }: Props) {
+  const onClick = () => {
+    setUserModal(!userModal);
+  };
+
   return (
     <div>
       <ModalContainer>
@@ -40,7 +49,7 @@ function UserModal() {
           <Btn>로그아웃</Btn>
         </ModalContent>
       </ModalContainer>
-      <Overlay />
+      <Overlay onClick={onClick} />
     </div>
   );
 }

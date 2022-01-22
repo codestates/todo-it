@@ -12,6 +12,7 @@ const ModalContent = styled.div`
   color: black;
   width: 20rem;
   height: 30rem;
+  align-items: center;
   background-color: #fff;
 `;
 
@@ -25,21 +26,32 @@ const Overlay = styled.div`
 `;
 const Teams = styled.div`
   color: black;
+  padding: 20px;
   font-size: 24px;
 `;
 
-function TeamModal() {
+interface Props {
+  teamModal: boolean;
+  setTeamModal(value: boolean): void;
+}
+function TeamModal({ teamModal, setTeamModal }: Props) {
   const contents = ['team1', 'team2', 'team3'];
+
+  const onClick = () => {
+    setTeamModal(!teamModal);
+  };
+
   return (
     <div>
       <ModalContainer>
         <ModalContent>
-          {contents.map((team) => {
-            <Teams>team</Teams>;
-          })}
+          TEAM
+          {contents.map((team, index) => (
+            <Teams key={index}>{team}</Teams>
+          ))}
         </ModalContent>
       </ModalContainer>
-      <Overlay />
+      <Overlay onClick={onClick} />
     </div>
   );
 }
