@@ -1,18 +1,17 @@
+import { envValidationSchema } from './common/config/env.config';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import * as Joi from 'joi';
+import { UsersModule } from './users/users.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { typeOrmModuleOptions } from './common/config/typeorm.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      validationSchema: Joi.object({
-        PORT: Joi.number().default(8000),
-      }),
+      validationSchema: envValidationSchema,
     }),
+    TypeOrmModule.forRootAsync(typeOrmModuleOptions),
+    UsersModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
