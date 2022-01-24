@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Header from '../../components/Header/Header'
 
 const SignupContainer = styled.div`
   
@@ -104,7 +103,7 @@ export const SignupPage = () => {
   const PasswordHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value)
     const CheckPass = (password: string):boolean => {
-      return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,128}$/.test(password)
+      return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,128}$/.test(password) || password.length === 0
     }
     if (!CheckPass(event.target.value)) {
       setIsPass(false)
@@ -116,7 +115,7 @@ export const SignupPage = () => {
 
   const CheckPassHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCheckPass(event.target.value)
-    if (password === event.target.value) {
+    if (password === event.target.value || password.length === 0) {
       setIsCheck(true)
     }
     else {
@@ -135,7 +134,6 @@ export const SignupPage = () => {
 
   return (
     <SignupContainer>
-      <Header/>
       <Body>
         <StyledDiv>
           <KeyInput>닉네임 :</KeyInput>

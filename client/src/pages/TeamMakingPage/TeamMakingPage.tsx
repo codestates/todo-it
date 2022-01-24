@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Header from "../../components/Header/Header";
 import { 
   StyledDiv,
   KeyInput,
@@ -55,7 +54,6 @@ export const TeamMakingPage = () => {
 
   return (
     <TeamMakingPageContainer>
-      <Header />
       <Body>
         <StyledDiv>
           <KeyInput>팀 이름 :</KeyInput>
