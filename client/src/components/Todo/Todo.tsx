@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-const Todo = styled.div`
+const TodoContainer = styled.div`
   width: 100%;
   height: 15vh;
   box-shadow: 1px 1px 2px rgb(184, 184, 184), -1px -1px 2px #ffffff;
@@ -36,7 +36,7 @@ interface Props {
   Dday: string;
 }
 
-function Todos({
+function Todo({
   index,
   todoList,
   setTodoList,
@@ -60,7 +60,7 @@ function Todos({
 
   return (
     <>
-      <Todo>
+      <TodoContainer>
         <Box padding={5}>
           <Checkbox onChange={CheckboxClick} type="checkbox" select={select} />
         </Box>
@@ -75,9 +75,9 @@ function Todos({
         <Box padding={20}>
           <div onClick={TodoDelFunc}>삭제</div>
         </Box>
-      </Todo>
+      </TodoContainer>
     </>
   );
 }
 
-export default Todos;
+export default Todo;
