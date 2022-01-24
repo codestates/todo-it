@@ -16,4 +16,10 @@ export class AuthController {
     // TODO: HTTPS 옵션 추가
     response.cookie('JWT', accessToken, { httpOnly: true });
   }
+
+  @Post('logout')
+  logout(@Res({ passthrough: true }) response: Response) {
+    // TODO: HTTPS 옵션 추가
+    response.clearCookie('JWT', { httpOnly: true });
+  }
 }
