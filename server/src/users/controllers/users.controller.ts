@@ -1,4 +1,4 @@
-import { UserRegisterDTO } from '../dto/user-register.dto';
+import { UserRegisterDto } from '../dto/user-register.dto';
 import { UsersService } from '../services/users.service';
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { User } from '../entities/user.entity';
@@ -10,7 +10,7 @@ export class UsersController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async register(
-    @Body() userRegisterDTO: UserRegisterDTO
+    @Body() userRegisterDTO: UserRegisterDto
   ): Promise<Pick<User, 'id' | 'email' | 'nickname'>> {
     const newUser = await this.usersService.registerUser(userRegisterDTO);
     return {
