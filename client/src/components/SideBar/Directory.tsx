@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-const Container = styled.div`
+const Container = styled.div<{ directoryClick: boolean }>`
   height: 70px;
   width: 95%;
-  background-color: #e4eaff;
+  background-color: ${(props) => (props.directoryClick ? '#e4eaff' : '')};
   margin: 3px;
 `;
 
@@ -67,6 +67,9 @@ function Directory({ name, Directories, setDirectories }: Props) {
   const [edit, setEdit] = useState(false);
   const [del, setDel] = useState(false);
   const [newName, setnewName] = useState('');
+  const [directoryClick, setDirectoryClick] = useState(false);
+
+  useEffect(() => {}, [Directories]);
 
   const DirectoryRightBtnClick = () => {
     setClick(!click);
@@ -85,11 +88,14 @@ function Directory({ name, Directories, setDirectories }: Props) {
 
   const EditBtnFunc = () => {
     setEdit(false);
-    let directories = [...Directories];
-    for (let i = 0; i < directories.length; i++) {
-      if (directories[i] === name) {
-        directories = directories.slice(0, i).concat([newName]);
-        directories.concat(directories.slice(i + 1));
+    let directories: Array<string> = [];
+    for (let i = 0; i < Directories.length; i++) {
+      if (Directories[i] === name) {
+        directories = [
+          ...Directories.slice(undefined, i),
+          ...[newName],
+          ...Directories.slice(i + 1),
+        ];
         break;
       }
     }
@@ -113,9 +119,13 @@ function Directory({ name, Directories, setDirectories }: Props) {
     setClick(false);
   };
 
+  const directoryClickFunc = () => {
+    setDirectoryClick(!directoryClick);
+  };
+
   return (
     <div>
-      <Container>
+      <Container onClick={directoryClickFunc} directoryClick={directoryClick}>
         <Name>{name}</Name>
         <DirectoryBtn onClick={DirectoryRightBtnClick}>...</DirectoryBtn>
       </Container>

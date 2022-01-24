@@ -24,11 +24,11 @@ const NameInput = styled.input`
 `;
 
 interface Props {
-  Directories: Array<string>;
+  directories: Array<string>;
   setDirectories(arr: string[]): void;
 }
 
-function AddDirectory({ Directories, setDirectories }: Props) {
+function AddDirectory({ directories, setDirectories }: Props) {
   const [click, setClick] = useState(false);
   const [directoryName, setDirectoryName] = useState('');
 
@@ -42,7 +42,7 @@ function AddDirectory({ Directories, setDirectories }: Props) {
   };
 
   const AddDirectory = () => {
-    setDirectories([...Directories, directoryName]);
+    setDirectories([...directories, directoryName]);
     setDirectoryName('');
     setClick(false);
   };

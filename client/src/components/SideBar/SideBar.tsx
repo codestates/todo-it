@@ -7,7 +7,6 @@ const Sidebar = styled.div`
   width: 30%;
   height: 100%;
   overflow-y: scroll;
-
   display: table;
   box-shadow: 2px 2px 5px #b8b8b8, -2px -2px 5px #ffffff;
 `;
@@ -16,28 +15,26 @@ const DirectoriyContainer = styled.div`
   align-items: center;
 `;
 
-function SideBar() {
-  const [Directories, setDirectories] = useState<string[]>([
-    'asdfsd',
-    'wegwef',
-    'Wgwfwe',
-  ]);
+interface Props {
+  directories: Array<string>;
+  setDirectories(arr: string[]): void;
+}
 
+function SideBar({ directories, setDirectories }: Props) {
   return (
     <Sidebar>
-      {console.log(Directories)}
       <DirectoriyContainer>
-        {Directories.map((name, index) => (
+        {directories.map((name, index) => (
           <Directory
             key={index}
             name={name}
-            Directories={Directories}
+            Directories={directories}
             setDirectories={setDirectories}
           />
         ))}
       </DirectoriyContainer>
       <AddDirectory
-        Directories={Directories}
+        directories={directories}
         setDirectories={(arr: string[]) => setDirectories(arr)}
       />
     </Sidebar>
