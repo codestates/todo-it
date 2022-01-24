@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Header } from "../../components/Header/Header";
+import Header from "../../components/Header/Header";
 import {
   StyledDiv,
   KeyInput,
@@ -30,11 +30,11 @@ export const LoginPage = () => {
   const LoginClickHandler = () => {
     // TODO : 로그인 요청 보내기
   }
-
+  
   return (
     <LoginContainer>
       <Header/>
-      <Body>
+      <Body style={{marginTop: "30vh"}}>
         <StyledDiv>
           <KeyInput>이메일 :</KeyInput>
           <InputBox>

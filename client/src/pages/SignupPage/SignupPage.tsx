@@ -39,7 +39,7 @@ const VerifyButton = styled.button`
   margin-left: 10px;
 `
 
-const Warning = styled.div`
+export const Warning = styled.div`
   font-size: smaller;
   font-weight: bolder;
   color: red;
@@ -61,10 +61,10 @@ export const StyledButton = styled.div`
   align-items: center;
   cursor: pointer;
   border-radius: 5px;
-  margin-left: 10px
+  margin-left: 10px;
 `
 
-export const Signup = () => {
+export const SignupPage = () => {
 
   const [name, setName] = useState('')
   const [isName, setIsName] = useState(true)
@@ -171,4 +171,4 @@ export const Signup = () => {
       </Body>
     </SignupContainer>
   )
-}
+} 
