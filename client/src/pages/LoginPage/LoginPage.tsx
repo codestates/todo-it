@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Header from "../../components/Header/Header";
 import {
   StyledDiv,
   KeyInput,
@@ -33,7 +32,6 @@ export const LoginPage = () => {
   
   return (
     <LoginContainer>
-      <Header/>
       <Body style={{marginTop: "30vh"}}>
         <StyledDiv>
           <KeyInput>이메일 :</KeyInput>
