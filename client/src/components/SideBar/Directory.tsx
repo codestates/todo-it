@@ -58,11 +58,11 @@ const DelBtn = styled.div``;
 
 interface Props {
   name: string;
-  Directories: Array<string>;
+  directories: Array<string>;
   setDirectories(arr: string[]): void;
 }
 
-function Directory({ name, Directories, setDirectories }: Props) {
+function Directory({ name, directories, setDirectories }: Props) {
   const [click, setClick] = useState(false);
   const [edit, setEdit] = useState(false);
   const [del, setDel] = useState(false);
@@ -85,31 +85,39 @@ function Directory({ name, Directories, setDirectories }: Props) {
 
   const EditBtnFunc = () => {
     setEdit(false);
-    let directories = [...Directories];
+    //let directories = [...Directories];
+    let newDirectoryList = directories.slice();
     for (let i = 0; i < directories.length; i++) {
       if (directories[i] === name) {
-        directories = directories.slice(0, i).concat([newName]);
-        directories.concat(directories.slice(i + 1));
+        newDirectoryList = [
+          ...directories.slice(undefined, i),
+          ...[newName],
+          ...directories.slice(i + 1),
+        ];
+        // directories = directories.slice(0, i).concat([newName]);
+        // directories.concat(directories.slice(i + 1));
         break;
       }
     }
     // directories.map((directoryname, index) => {
     //   return directoryname === name ? (directoryname = newName) : true;
     // });
-    setDirectories(directories);
+    setDirectories(newDirectoryList);
     setClick(false);
   };
 
   const DelBtnFunc = () => {
     setDel(false);
-    let directories = [...Directories];
+    let newDirectoryList = directories.slice();
     for (let i = 0; i < directories.length; i++) {
       if (directories[i] === name) {
-        directories = directories.slice(0, i).concat(directories.slice(i + 1));
+        newDirectoryList = directories
+          .slice(undefined, i)
+          .concat(directories.slice(i + 1));
         break;
       }
     }
-    setDirectories(directories);
+    setDirectories(newDirectoryList);
     setClick(false);
   };
 

@@ -30,7 +30,7 @@ function SideBar({ directories, setDirectories }: Props) {
           <Directory
             key={index}
             name={name}
-            Directories={directories}
+            directories={directories}
             setDirectories={setDirectories}
           />
         ))}
