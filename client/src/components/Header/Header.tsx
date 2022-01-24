@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import MainPage from '../../pages/MainPage/MainPage';
+// import MainPage from '../../pages/MainPage/MainPage';
 import logo from './header_logo.png';
 import TeamModal from './Modal/TeamModal';
 import UserModal from './Modal/UserModal';
