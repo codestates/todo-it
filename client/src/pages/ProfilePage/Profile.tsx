@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Header from "../../components/Header/Header";
 import {
   StyledDiv,
   KeyInput,
@@ -35,7 +34,6 @@ export const Profile = () => {
     <UserSettingPageContainer>
       {isLogin ? <UserLoginModal LoginModalHandler={LoginModalHandler}/> : ''}
       {isWithdrawal ? <WithdrawalModal WithdrawalModalHandler={WithdrawalModalHandler}/> : ''}
-      <Header/>
       <Body>
         <StyledDiv>
           <KeyInput>닉네임 :</KeyInput>
