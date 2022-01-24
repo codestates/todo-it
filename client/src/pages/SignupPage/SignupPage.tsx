@@ -126,6 +126,7 @@ export const SignupPage = () => {
 
   const SignupClickHandler = () => {
     // TODO : signup 요청
+    // if (200 ok) => window.location.href = localhost:3000/login
   }
 
   const verifyEmailHandler = () => {
