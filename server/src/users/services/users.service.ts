@@ -1,6 +1,6 @@
-import { UserRepository } from './../repositories/user.repository';
+import { UserRepository } from '../repositories/user.repository';
 import { ConflictException, Injectable } from '@nestjs/common';
-import { UserRegisterDTO } from '../dto/user-register.dto';
+import { UserRegisterDto } from '../dto/user-register.dto';
 import { generateRandomNickname } from 'src/common/utils/generateRandomNickname';
 import { User } from '../entities/user.entity';
 
@@ -20,7 +20,7 @@ export class UsersService {
     email,
     password,
     nickname,
-  }: UserRegisterDTO): Promise<User> {
+  }: UserRegisterDto): Promise<User> {
     if (await this.userRepository.exists({ email })) {
       throw new ConflictException('이미 존재하는 이메일입니다.');
     }
