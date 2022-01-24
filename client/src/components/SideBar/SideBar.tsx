@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import AddDirectory from './AddDirectory';
 import Directory from './Directory';
@@ -16,28 +16,27 @@ const DirectoriyContainer = styled.div`
   align-items: center;
 `;
 
-function SideBar() {
-  const [Directories, setDirectories] = useState<string[]>([
-    'asdfsd',
-    'wegwef',
-    'Wgwfwe',
-  ]);
+interface Props {
+  directories: string[];
+  setDirectories(arr: string[]): void;
+}
 
+function SideBar({ directories, setDirectories }: Props) {
   return (
     <Sidebar>
-      {console.log(Directories)}
+      {console.log(directories)}
       <DirectoriyContainer>
-        {Directories.map((name, index) => (
+        {directories.map((name, index) => (
           <Directory
             key={index}
             name={name}
-            Directories={Directories}
+            Directories={directories}
             setDirectories={setDirectories}
           />
         ))}
       </DirectoriyContainer>
       <AddDirectory
-        Directories={Directories}
+        Directories={directories}
         setDirectories={(arr: string[]) => setDirectories(arr)}
       />
     </Sidebar>

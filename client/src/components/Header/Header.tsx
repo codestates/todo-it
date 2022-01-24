@@ -16,6 +16,7 @@ const Container = styled.div`
   left: 0; */
   line-height: 50px;
   text-align: center;
+  position: fixed;
   box-shadow: 2px 2px 5px #b8b8b8, -2px -2px 5px #ffffff;
 `;
 
@@ -71,6 +72,7 @@ function Header() {
         <UserModal userModal={userModal} setUserModal={setUserModal} />
       ) : null}
       <Container>
+        {/* Todo: Link */}
         <NavLink to="/">
           <Logo src={logo}></Logo>
         </NavLink>
