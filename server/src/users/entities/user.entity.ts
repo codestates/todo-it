@@ -1,6 +1,7 @@
+import { Todo } from '../../todos/entities/todo.entity';
 import { IsBoolean, IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { CommonEntity } from 'src/common/entities/common.entity';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 
 @Entity()
 export class User extends CommonEntity {
@@ -22,4 +23,7 @@ export class User extends CommonEntity {
   @IsBoolean()
   @Column({ type: 'boolean', nullable: false, default: false })
   isEmailVerified: boolean;
+
+  @OneToMany(() => Todo, (todo) => todo.user)
+  todos: Todo[];
 }
