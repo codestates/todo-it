@@ -1,3 +1,4 @@
+import { JwtStrategy } from './jwt/jwt.strategy';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserRepository } from '../users/repositories/user.repository';
@@ -21,7 +22,7 @@ import { EnvironmentVariables } from 'src/env';
       }),
     }),
   ],
-  providers: [AuthService],
+  providers: [AuthService, JwtStrategy],
   controllers: [AuthController],
 })
 export class AuthModule {}

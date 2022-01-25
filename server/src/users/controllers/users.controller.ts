@@ -1,3 +1,4 @@
+import { JwtAuthGuard } from './../../auth/jwt/jwt-auth.guiard';
 import { UserRegisterDto } from '../dto/user-register.dto';
 import { UsersService } from '../services/users.service';
 import {
@@ -10,6 +11,7 @@ import {
   Param,
   ParseIntPipe,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 
 @Controller('users')
@@ -23,7 +25,8 @@ export class UsersController {
   }
 
   @Get(':id')
-  getUser(@Param('id', ParseIntPipe) userId: number) {
+  @UseGuards(JwtAuthGuard)
+  getUserById(@Param('id', ParseIntPipe) userId: number) {
     return this.usersService.getUserById(userId);
   }
 
@@ -34,7 +37,7 @@ export class UsersController {
   }
 
   @Get(':id/todos')
-  findTodos(@Param('id', ParseIntPipe) userId: number) {
-    return this.usersService.findTodos(userId);
+  getUserTodos(@Param('id', ParseIntPipe) userId: number) {
+    return this.usersService.getUserTodos(userId);
   }
 }

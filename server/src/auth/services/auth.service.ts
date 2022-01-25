@@ -1,3 +1,4 @@
+import { JwtPayload } from '../jwt/jwt.payload';
 import { LoginRequestDto } from '../dto/login-request.dto';
 import { UserRepository } from '../../users/repositories/user.repository';
 import { ForbiddenException, Injectable } from '@nestjs/common';
@@ -17,7 +18,7 @@ export class AuthService {
       throw new ForbiddenException('잘못된 이메일 혹은 비밀번호');
     }
 
-    const payload = { sub: user.id, email };
+    const payload: JwtPayload = { sub: user.id, email };
     return this.jwtService.sign(payload);
   }
 }
