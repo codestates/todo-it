@@ -7,13 +7,13 @@ import TeamModal from './Modal/TeamModal';
 import UserModal from './Modal/UserModal';
 const Container = styled.div`
   background-color: #fff;
-  //position: fixed;
+  position: fixed;
   width: 100%;
   height: 50px;
   display: flex;
   justify-content: space-between;
-  /* top: 0;
-  left: 0; */
+  top: 0;
+  left: 0;
   line-height: 50px;
   text-align: center;
   box-shadow: 2px 2px 5px #b8b8b8, -2px -2px 5px #ffffff;
