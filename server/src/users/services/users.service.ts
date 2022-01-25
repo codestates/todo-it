@@ -29,9 +29,14 @@ export class UsersService {
     return this.pickUserData(newUser);
   }
 
-  async getUser(userId: number) {
+  async getUserById(userId: number) {
     const user = await this.userRepository.findOneOrFail(userId);
     return this.pickUserData(user);
+  }
+
+  async deleteUserById(userId: number) {
+    const user = await this.userRepository.findOneOrFail(userId);
+    await user.remove();
   }
 
   async findTodos(userId: number) {
