@@ -1,6 +1,3 @@
-import { JwtAuthGuard } from '../../auth/jwt/jwt-auth.guiard';
-import { UserRegisterDto } from '../dto/user-register.dto';
-import { UsersService } from '../services/users.service';
 import {
   Controller,
   Get,
@@ -12,6 +9,9 @@ import {
   ParseIntPipe,
   UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../../auth/jwt/jwt-auth.guiard';
+import { UserRegisterDto } from '../dto/user-register.dto';
+import { UsersService } from '../services/users.service';
 
 @Controller('users')
 export class UsersController {
@@ -27,10 +27,5 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   getUserById(@Param('id', ParseIntPipe) userId: number) {
     return this.usersService.getUserById(userId);
-  }
-
-  @Get(':id/todos')
-  getUserTodos(@Param('id', ParseIntPipe) userId: number) {
-    return this.usersService.getUserTodos(userId);
   }
 }

@@ -27,4 +27,10 @@ export class UsersMeController {
   async deleteMe(@CurrentUser() { sub: userId }: JwtPayload) {
     await this.usersService.deleteUserById(userId);
   }
+
+  @Get('todos')
+  @UseGuards()
+  getUserTodos(@CurrentUser() { sub: userId }: JwtPayload) {
+    return this.usersService.getUserTodos(userId);
+  }
 }
