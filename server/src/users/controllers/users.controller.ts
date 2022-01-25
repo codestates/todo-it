@@ -9,6 +9,7 @@ import {
   Body,
   Param,
   ParseIntPipe,
+  Delete,
 } from '@nestjs/common';
 
 @Controller('users')
@@ -17,17 +18,23 @@ export class UsersController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async register(@Body() userRegisterDto: UserRegisterDto) {
+  register(@Body() userRegisterDto: UserRegisterDto) {
     return this.usersService.registerUser(userRegisterDto);
   }
 
   @Get(':id')
-  async getUser(@Param('id', ParseIntPipe) userId: number) {
-    return this.usersService.getUser(userId);
+  getUser(@Param('id', ParseIntPipe) userId: number) {
+    return this.usersService.getUserById(userId);
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async deleteUser(@Param('id', ParseIntPipe) userId: number) {
+    await this.usersService.deleteUserById(userId);
   }
 
   @Get(':id/todos')
-  async findTodos(@Param('id', ParseIntPipe) userId: number) {
+  findTodos(@Param('id', ParseIntPipe) userId: number) {
     return this.usersService.findTodos(userId);
   }
 }
