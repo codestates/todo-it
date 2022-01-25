@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import styled from 'styled-components';
 import {
   StyledDiv,
   KeyInput,
@@ -7,42 +7,76 @@ import {
   ValueInput,
   Body,
   ButtonBox,
-  StyledButton
-} from "../SignupPage/SignupPage"
+  StyledButton,
+  Warning,
+} from '../SignupPage/SignupPage';
+import axios from 'axios';
 
-const LoginContainer = styled.div`
-  
-`
+const LoginContainer = styled.div``;
 
-export const LoginPage = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+interface Iprops {
+  LoginHandler: () => void;
+}
+
+export const LoginPage = ({ LoginHandler }: Iprops) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isRight, setIsRight] = useState(true);
 
   const EmailHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value)
-  }
+    setEmail(event.target.value);
+  };
 
   const PasswordHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value)
-  }
+    setPassword(event.target.value);
+  };
 
   const LoginClickHandler = () => {
     // TODO : 로그인 요청 보내기
-  }
-  
+    axios
+      .post(
+        'https://localhost:8000/auth/login',
+        { email, password },
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        LoginHandler();
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsRight(false);
+      });
+  };
+
   return (
     <LoginContainer>
-      <Body style={{marginTop: "30vh"}}>
+      <Body style={{ marginTop: '30vh' }}>
         <StyledDiv>
           <KeyInput>이메일 :</KeyInput>
           <InputBox>
-            <ValueInput type="text" placeholder="이메일" value={email} onChange={EmailHandler}/>
+            <ValueInput
+              type="text"
+              placeholder="이메일"
+              value={email}
+              onChange={EmailHandler}
+            />
           </InputBox>
         </StyledDiv>
         <StyledDiv>
           <KeyInput>비밀번호 :</KeyInput>
           <InputBox>
-            <ValueInput type="password" value={password} onChange={PasswordHandler}/>
+            <ValueInput
+              type="password"
+              value={password}
+              onChange={PasswordHandler}
+            />
+            <Warning style={isRight ? { display: 'none' } : {}}>
+              잘못된 이메일 혹은 비밀번호 입니다.
+            </Warning>
           </InputBox>
         </StyledDiv>
         <ButtonBox>
@@ -52,6 +86,5 @@ export const LoginPage = () => {
         </ButtonBox>
       </Body>
     </LoginContainer>
-    // TODO: react-router-dom LINK
-  )
-}
+  );
+};
