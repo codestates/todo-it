@@ -30,7 +30,7 @@ export class UsersMeController {
 
   @Get('todos')
   @UseGuards()
-  getUserTodos(@CurrentUser() { sub: userId }: JwtPayload) {
+  getMyTodos(@CurrentUser() { sub: userId }: JwtPayload) {
     return this.usersService.getUserTodos(userId);
   }
 }
