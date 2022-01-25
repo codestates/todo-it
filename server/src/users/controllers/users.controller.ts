@@ -1,3 +1,5 @@
+import { JwtPayload } from './../../../dist/auth/jwt/jwt.payload.d';
+import { CurrentUser } from 'src/common/decorators/current-user.decorator';
 import { JwtAuthGuard } from './../../auth/jwt/jwt-auth.guiard';
 import { UserRegisterDto } from '../dto/user-register.dto';
 import { UsersService } from '../services/users.service';
@@ -30,9 +32,10 @@ export class UsersController {
     return this.usersService.getUserById(userId);
   }
 
-  @Delete(':id')
+  @Delete('me')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async deleteUser(@Param('id', ParseIntPipe) userId: number) {
+  @UseGuards(JwtAuthGuard)
+  async deleteUser(@CurrentUser() { sub: userId }: JwtPayload) {
     await this.usersService.deleteUserById(userId);
   }
 
