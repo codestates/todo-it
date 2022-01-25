@@ -45,8 +45,13 @@ interface todoListType {
   Dday: string;
 }
 
+interface DirectoryListType {
+  directoryId: number;
+  directory: string;
+}
+
 interface Props {
-  directories: string[];
+  directories: DirectoryListType[];
   todoList: todoListType[];
   setTodoList(arr: todoListType[]): void;
 }
@@ -66,12 +71,16 @@ function AddTodo({ directories, todoList, setTodoList }: Props) {
 
   const TodoAddFunc = () => {
     //console.log(name, selectDirectory, calendarValue, selectDirectory);
-    let todoObj = {
+    const todoObj = {
       content: name,
       directory: selectDirectory,
       Dday: calendarValue,
     };
     setTodoList([...todoList, todoObj]);
+    setSelectDirectory('');
+    setCalendarValue('');
+    setName('');
+    setAddBtnClick(false);
   };
 
   const InputOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,12 +104,11 @@ function AddTodo({ directories, todoList, setTodoList }: Props) {
         <PlusBtnContainer onClick={AddBtnFunc}>+</PlusBtnContainer>
       ) : (
         <AddContainer>
-          <DirectorySelect></DirectorySelect>
           <select onChange={handleSelect}>
-            {directories.map((name, index) => {
+            {directories.map((obj, index) => {
               return (
-                <option key={index} value={name}>
-                  {name}
+                <option key={index} value={obj.directory}>
+                  {obj.directory}
                 </option>
               );
             })}

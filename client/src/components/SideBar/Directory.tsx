@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
+  &:focus {
+    background-color: red;
+  }
   height: 70px;
   width: 95%;
   background-color: #e4eaff;
@@ -56,10 +59,15 @@ const DelBox = styled.div``;
 
 const DelBtn = styled.div``;
 
+interface DirectoryListType {
+  directoryId: number;
+  directory: string;
+}
+
 interface Props {
   name: string;
-  directories: Array<string>;
-  setDirectories(arr: string[]): void;
+  directories: DirectoryListType[];
+  setDirectories(arr: DirectoryListType[]): void;
 }
 
 function Directory({ name, directories, setDirectories }: Props) {
@@ -88,10 +96,10 @@ function Directory({ name, directories, setDirectories }: Props) {
     //let directories = [...Directories];
     let newDirectoryList = directories.slice();
     for (let i = 0; i < directories.length; i++) {
-      if (directories[i] === name) {
+      if (directories[i].directory === name) {
         newDirectoryList = [
           ...directories.slice(undefined, i),
-          ...[newName],
+          ...[{ directoryId: i, directory: newName }],
           ...directories.slice(i + 1),
         ];
         // directories = directories.slice(0, i).concat([newName]);
@@ -110,7 +118,7 @@ function Directory({ name, directories, setDirectories }: Props) {
     setDel(false);
     let newDirectoryList = directories.slice();
     for (let i = 0; i < directories.length; i++) {
-      if (directories[i] === name) {
+      if (directories[i].directory === name) {
         newDirectoryList = directories
           .slice(undefined, i)
           .concat(directories.slice(i + 1));
@@ -125,7 +133,9 @@ function Directory({ name, directories, setDirectories }: Props) {
     <div>
       <Container>
         <Name>{name}</Name>
-        <DirectoryBtn onClick={DirectoryRightBtnClick}>...</DirectoryBtn>
+        {name === 'Today' || name === 'All' ? null : (
+          <DirectoryBtn onClick={DirectoryRightBtnClick}>...</DirectoryBtn>
+        )}
       </Container>
       {click ? (
         <Modal>

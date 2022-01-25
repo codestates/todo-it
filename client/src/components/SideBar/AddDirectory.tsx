@@ -23,9 +23,14 @@ const NameInput = styled.input`
   height: 40%;
 `;
 
+interface DirectoryListType {
+  directoryId: number;
+  directory: string;
+}
+
 interface Props {
-  Directories: Array<string>;
-  setDirectories(arr: string[]): void;
+  Directories: DirectoryListType[];
+  setDirectories(arr: DirectoryListType[]): void;
 }
 
 function AddDirectory({ Directories, setDirectories }: Props) {
@@ -42,7 +47,9 @@ function AddDirectory({ Directories, setDirectories }: Props) {
   };
 
   const AddDirectory = () => {
-    setDirectories([...Directories, directoryName]);
+    const DirectoryId = Directories.length;
+    let newDirectory = { directoryId: DirectoryId, directory: directoryName };
+    setDirectories([...Directories, newDirectory]);
     setDirectoryName('');
     setClick(false);
   };

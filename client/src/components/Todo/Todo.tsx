@@ -21,12 +21,21 @@ const Checkbox = styled.input<{ select: boolean }>`
   height: 20px;
 `;
 
+const CalendarBtn = styled.input`
+  /* all: unset;
+  padding-left: 10px;
+  padding-right: 10px; */
+`;
+
 interface todoListType {
   content: string;
   directory: string;
   Dday: string;
 }
-
+interface DirectoryListType {
+  directoryId: number;
+  directory: string;
+}
 interface Props {
   index: number;
   todoList: todoListType[];
@@ -34,6 +43,7 @@ interface Props {
   content: string;
   directory: string;
   Dday: string;
+  directories: DirectoryListType[];
 }
 
 function Todos({
@@ -43,9 +53,14 @@ function Todos({
   content,
   directory,
   Dday,
+  directories,
 }: Props) {
   const [select, setSelect] = useState<boolean>(false);
-
+  const [editBtn, setEditBtn] = useState(false);
+  const [click, setClick] = useState(false);
+  const [editName, setEditName] = useState(content);
+  const [selectDirectory, setSelectDirectory] = useState(directory);
+  const [calendarValue, setCalendarValue] = useState(Dday);
   const CheckboxClick = () => {
     setSelect(!select);
   };
@@ -56,6 +71,41 @@ function Todos({
       ...todoList.slice(index + 1),
     ];
     setTodoList(newTodoList);
+    setClick(false);
+  };
+
+  const TodoEditFunc = () => {
+    setClick(!click);
+    setEditBtn(true);
+  };
+
+  const onClick = () => {
+    setClick(!click);
+  };
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setEditName(value);
+  };
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    setSelectDirectory(value);
+  };
+  const dateSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setCalendarValue(value);
+  };
+
+  const EditFunc = () => {
+    let newTodoList = [
+      ...todoList.slice(undefined, index),
+      ...[
+        { content: editName, directory: selectDirectory, Dday: calendarValue },
+      ],
+      ...todoList.slice(index + 1),
+    ];
+    setTodoList(newTodoList);
+    setClick(false);
+    setEditBtn(false);
   };
 
   return (
@@ -73,9 +123,36 @@ function Todos({
           <div>{Dday}</div>
         </Box>
         <Box padding={20}>
-          <div onClick={TodoDelFunc}>삭제</div>
+          <div onClick={onClick}>...</div>
         </Box>
       </Todo>
+
+      {click ? (
+        <div>
+          <div onClick={TodoDelFunc}>삭제</div>
+          <div onClick={TodoEditFunc}>수정</div>
+        </div>
+      ) : null}
+      {editBtn ? (
+        <div>
+          <select onChange={handleSelect}>
+            {directories.map((obj, index) => {
+              return (
+                <option key={index} value={obj.directory}>
+                  {obj.directory}
+                </option>
+              );
+            })}
+          </select>
+          <input onChange={onChange} value={editName}></input>
+          <CalendarBtn
+            type="date"
+            onChange={dateSelect}
+            value={calendarValue}
+          ></CalendarBtn>
+          <div onClick={EditFunc}>확인</div>
+        </div>
+      ) : null}
     </>
   );
 }
