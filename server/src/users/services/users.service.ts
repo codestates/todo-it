@@ -39,7 +39,7 @@ export class UsersService {
     await user.remove();
   }
 
-  async findTodos(userId: number) {
+  async getUserTodos(userId: number) {
     const user = await this.userRepository.findOneOrFail(userId, {
       relations: ['todos'],
     });
