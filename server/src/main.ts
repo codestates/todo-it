@@ -6,9 +6,17 @@ import { AppModule } from './app.module';
 import { EnvironmentVariables } from './env';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as cookieParser from 'cookie-parser';
+import { HttpsOptions } from '@nestjs/common/interfaces/external/https-options.interface';
+import { readFileSync } from 'fs';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const httpsOptions: HttpsOptions = {
+    key: readFileSync('./secrets/private-key.pem'),
+    cert: readFileSync('./secrets/public-certificate.pem'),
+  };
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    httpsOptions,
+  });
   app.disable('x-powered-by');
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe());

@@ -34,6 +34,9 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# Env files
+# Env
 .env*
 !.env.example
+
+# HTTPS
+/secrets
