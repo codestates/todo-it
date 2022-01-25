@@ -1,7 +1,15 @@
 import { UserRegisterDto } from '../dto/user-register.dto';
 import { UsersService } from '../services/users.service';
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
-import { User } from '../entities/user.entity';
+import {
+  Controller,
+  Get,
+  Post,
+  HttpCode,
+  HttpStatus,
+  Body,
+  Param,
+  ParseIntPipe,
+} from '@nestjs/common';
 
 @Controller('users')
 export class UsersController {
@@ -9,14 +17,12 @@ export class UsersController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async register(
-    @Body() userRegisterDTO: UserRegisterDto
-  ): Promise<Pick<User, 'id' | 'email' | 'nickname'>> {
-    const newUser = await this.usersService.registerUser(userRegisterDTO);
-    return {
-      id: newUser.id,
-      email: newUser.email,
-      nickname: newUser.nickname,
-    };
+  async register(@Body() userRegisterDto: UserRegisterDto) {
+    return this.usersService.registerUser(userRegisterDto);
+  }
+
+  @Get(':id/todos')
+  async findTodos(@Param('id', ParseIntPipe) userId: number) {
+    return this.usersService.findTodos(userId);
   }
 }

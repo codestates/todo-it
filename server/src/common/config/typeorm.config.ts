@@ -1,3 +1,4 @@
+import { Todo } from '../../todos/entities/todo.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import {
   TypeOrmModuleAsyncOptions,
@@ -18,7 +19,7 @@ export const typeOrmModuleOptions: TypeOrmModuleAsyncOptions = {
     username: configService.get('DB_USERNAME', { infer: true }),
     password: configService.get('DB_PASSWORD', { infer: true }),
     database: configService.get('DB_NAME', { infer: true }),
-    entities: [User],
+    entities: [User, Todo],
     // TODO: 밑의 옵션 두개는 개발모드에서만 적용
     synchronize: true,
     logging: true,
