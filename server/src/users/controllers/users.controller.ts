@@ -1,6 +1,6 @@
-import { JwtPayload } from './../../../dist/auth/jwt/jwt.payload.d';
+import { JwtPayload } from 'src/auth/jwt/jwt.payload';
 import { CurrentUser } from 'src/common/decorators/current-user.decorator';
-import { JwtAuthGuard } from './../../auth/jwt/jwt-auth.guiard';
+import { JwtAuthGuard } from '../../auth/jwt/jwt-auth.guiard';
 import { UserRegisterDto } from '../dto/user-register.dto';
 import { UsersService } from '../services/users.service';
 import {
