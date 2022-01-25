@@ -21,6 +21,11 @@ export class UsersController {
     return this.usersService.registerUser(userRegisterDto);
   }
 
+  @Get(':id')
+  async getUser(@Param('id', ParseIntPipe) userId: number) {
+    return this.usersService.getUser(userId);
+  }
+
   @Get(':id/todos')
   async findTodos(@Param('id', ParseIntPipe) userId: number) {
     return this.usersService.findTodos(userId);
