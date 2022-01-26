@@ -1,61 +1,82 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
+import '../../fonts/font.css';
 const Container = styled.div`
   &:focus {
     background-color: red;
   }
+  display: inline-flex;
+  flex-flow: row wrap;
   height: 70px;
   width: 95%;
-  background-color: #e4eaff;
+  padding: 3px;
   margin: 3px;
+  border-radius: 10px;
+  background-color: #a8c4a6;
 `;
 
 const Name = styled.div`
-  float: left;
-  padding: 20px;
+  font-family: 'EliceDigitalBaeum_Bold';
+  flex: 1;
+  font-size: 20px;
+  text-align: left;
+  line-height: 70px;
+  padding-left: 40px;
 `;
 
 const DirectoryBtn = styled.div`
   &:hover {
     color: black;
   }
-  float: right;
-  padding: 20px;
-  width: 30px;
-  height: 30px;
+
+  min-width: 50px;
+  line-height: 70px;
   color: rgba(0, 0, 0, 0);
 `;
 
 const Modal = styled.div`
-  height: 70px;
-  width: 95%;
+  border-radius: 10px;
+  height: 60px;
+  width: 50%;
+  flex: 1;
+  align-content: space-between;
   margin: 3px;
-  display: flex;
-  justify-content: space-between;
-  background-color: #ffefef;
+  background-color: #e9e9e9;
 `;
 
 const Delete = styled.div`
-  /* margin-right: 30%;
-  padding: 20%; */
+  width: 100%;
 `;
 
 const Edit = styled.div`
-  /* margin-left: 30%;
-  padding: 20%; */
+  width: 100%;
 `;
 
 const EditDelteBtnContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-flow: column;
+  align-content: space-around;
+  padding: 10px;
 `;
 
-const EditBox = styled.div``;
+const EditBox = styled.div`
+  padding: 10px;
+`;
 
-const EditInput = styled.input``;
+const EditInput = styled.input`
+  all: unset;
+  width: 100%;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid gray;
+`;
+const EditBtn = styled.div``;
 
-const DelBox = styled.div``;
+const DelBox = styled.div`
+  display: block;
+  padding: 20px;
+`;
 
 const DelBtn = styled.div``;
 
@@ -133,32 +154,34 @@ function Directory({ name, directories, setDirectories }: Props) {
     <div>
       <Container>
         <Name>{name}</Name>
+
+        {click ? (
+          <Modal>
+            {edit || del ? null : (
+              <EditDelteBtnContainer>
+                <Edit onClick={EditClick}>수정하기</Edit>
+                <Delete onClick={DeleteClick}>삭제하기</Delete>
+              </EditDelteBtnContainer>
+            )}
+
+            {edit ? (
+              <EditBox>
+                <EditInput value={newName} onChange={onChange} />
+                <EditBtn onClick={EditBtnFunc}>수정</EditBtn>
+              </EditBox>
+            ) : null}
+            {del ? (
+              <DelBox>
+                <DelBtn onClick={DelBtnFunc}>삭제하기</DelBtn>
+              </DelBox>
+            ) : null}
+          </Modal>
+        ) : null}
+
         {name === 'Today' || name === 'All' ? null : (
           <DirectoryBtn onClick={DirectoryRightBtnClick}>...</DirectoryBtn>
         )}
       </Container>
-      {click ? (
-        <Modal>
-          {edit || del ? null : (
-            <EditDelteBtnContainer>
-              <Edit onClick={EditClick}>수정하기</Edit>
-              <Delete onClick={DeleteClick}>삭제하기</Delete>
-            </EditDelteBtnContainer>
-          )}
-
-          {edit ? (
-            <EditBox>
-              <EditInput value={newName} onChange={onChange} />
-              <button onClick={EditBtnFunc}>수정</button>
-            </EditBox>
-          ) : null}
-          {del ? (
-            <DelBox>
-              <DelBtn onClick={DelBtnFunc}>삭제하기</DelBtn>
-            </DelBox>
-          ) : null}
-        </Modal>
-      ) : null}
     </div>
   );
 }

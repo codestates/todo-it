@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
+import '../../fonts/font.css';
 const AddBtn = styled.div`
-  background-color: #cccccc;
+  &:hover {
+    color: #202020;
+  }
+  color: gray;
+  background-color: #eeeeee;
   height: 10vh;
+
   text-align: center;
-  line-height: 4em;
+  line-height: 65px;
   display: flex;
   justify-content: center;
+  font-size: 20px;
 `;
 
 const AddListContainer = styled.div`
-  background-color: #e6f3fc;
+  background-color: #708870;
   height: 10vh;
   align-items: center;
   position: relative;
@@ -20,7 +26,24 @@ const AddListContainer = styled.div`
 `;
 
 const NameInput = styled.input`
-  height: 40%;
+  all: unset;
+  font-family: 'EliceDigitalBaeum_Bold';
+  color: white;
+  font-size: 20px;
+  width: 60%;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid white;
+`;
+const SubmitBtn = styled.div`
+  &:hover {
+    color: #202020;
+  }
+  all: unset;
+  color: #ffffff;
+  font-size: 30px;
+  padding: 10px;
 `;
 
 interface DirectoryListType {
@@ -61,7 +84,7 @@ function AddDirectory({ Directories, setDirectories }: Props) {
       ) : (
         <AddListContainer>
           <NameInput onChange={onChange} value={directoryName} />
-          <button onClick={AddDirectory}>+</button>
+          <SubmitBtn onClick={AddDirectory}>+</SubmitBtn>
         </AddListContainer>
       )}
     </div>

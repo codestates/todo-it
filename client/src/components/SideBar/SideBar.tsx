@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import AddDirectory from './AddDirectory';
 import Directory from './Directory';
+import '../../fonts/font.css';
 const Sidebar = styled.div`
   float: left;
   width: 30%;
