@@ -16,7 +16,7 @@ import { NavLink } from 'react-router-dom';
 const LoginContainer = styled.div``;
 
 interface Iprops {
-  LoginHandler: () => void;
+  LoginHandler: (accessToken: string) => void;
 }
 
 export const LoginPage = ({ LoginHandler }: Iprops) => {
@@ -45,7 +45,7 @@ export const LoginPage = ({ LoginHandler }: Iprops) => {
       )
       .then((res) => {
         console.log(res.data);
-        LoginHandler();
+        LoginHandler(res.data.accessToken);
       })
       .catch((err) => {
         console.log(err);

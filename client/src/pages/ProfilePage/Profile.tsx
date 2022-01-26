@@ -8,6 +8,7 @@ import {
 } from '../SignupPage/SignupPage';
 import { UserLoginModal } from './UserLoginModal';
 import { WithdrawalModal } from './WithdrawalModal';
+import { NavLink } from 'react-router-dom';
 
 const UserSettingPageContainer = styled.div``;
 
@@ -29,7 +30,6 @@ export const Profile = () => {
 
   return (
     <UserSettingPageContainer>
-      {isLogin ? <UserLoginModal LoginModalHandler={LoginModalHandler} /> : ''}
       {isWithdrawal ? (
         <WithdrawalModal WithdrawalModalHandler={WithdrawalModalHandler} />
       ) : (
@@ -49,8 +49,11 @@ export const Profile = () => {
           </KeyInput>
         </StyledDiv>
         <ButtonBox>
-          {/* <StyledButton>팀 관리</StyledButton> */}
-          <StyledButton onClick={LoginModalHandler}>회원정보수정</StyledButton>
+          <NavLink to="/userinfosetting">
+            <StyledButton onClick={LoginModalHandler}>
+              회원정보수정
+            </StyledButton>
+          </NavLink>
           <StyledButton onClick={WithdrawalModalHandler}>회원탈퇴</StyledButton>
         </ButtonBox>
       </Body>
