@@ -5,7 +5,7 @@ import { User } from '../entities/user.entity';
 export class UserUpdateDto extends PartialType(PickType(User, ['nickname'])) {
   @IsString()
   @IsNotEmpty()
-  originalPassword: string;
+  oldPassword: string;
 
   @IsString()
   @IsNotEmpty()
