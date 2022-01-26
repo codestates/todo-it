@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const SignupContainer = styled.div``;
 
-export const Body = styled.body`
+export const Body = styled.div`
   margin: 15vh 0 0 0;
 `;
 
@@ -60,6 +60,7 @@ export const StyledButton = styled.div`
   cursor: pointer;
   border-radius: 5px;
   margin-left: 10px;
+  color: black;
 `;
 
 export const SignupPage = () => {
@@ -129,6 +130,8 @@ export const SignupPage = () => {
       .post('https://localhost:8000/users', { email, password, nickname: name })
       .then((res) => {
         console.log(res.data);
+        alert('회원가입이 완료되었습니다.');
+        window.location.href = 'https://localhost:3000/';
       })
       .catch((err) => {
         alert(err);

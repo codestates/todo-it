@@ -23,5 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 
 # ssl
-/cert.pem
-/key.pem
+cert.pem
+key.pem
+

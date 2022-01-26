@@ -67,6 +67,7 @@ function MainPage({ userId }: Props) {
 
   return (
     <Container>
+      <div style={{ height: '50px' }}>a</div>
       <SideBar
         userId={userId}
         clickDirectory={clickDirectory}
