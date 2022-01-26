@@ -26,7 +26,7 @@ export class TodosService {
       directoryId === undefined
         ? null
         : await this.directoryRepository.findOneOrFail(directoryId, {
-            relations: ['user', 'directory'],
+            relations: ['user'],
           });
 
     if (directory !== null && directory.user.id !== userId) {
