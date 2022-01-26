@@ -30,15 +30,31 @@ function MainPage({ userId }: Props) {
     content: string;
     directory: string;
     Dday: string;
+    comment: string;
   }
   //dummyData
   const [todoList, setTodoList] = useState<todoListType[]>([
-    { content: '책읽기', directory: '공부', Dday: '2022-01-31' },
-    { content: '운동하기', directory: '관리', Dday: '2022-01-29' },
-    { content: 'todo-it', directory: '개발', Dday: '2022-04-11' },
-    { content: '과제 제출', directory: '공부', Dday: '2022-02-04' },
-    { content: '팩하기', directory: '관리', Dday: '2022-01-25' },
-    { content: '파이썬공부', directory: '공부', Dday: '2022-01-25' },
+    { content: '책읽기', directory: '공부', Dday: '2022-01-31', comment: '' },
+    { content: '운동하기', directory: '관리', Dday: '2022-01-29', comment: '' },
+    {
+      content: 'todo-it',
+      directory: '개발',
+      Dday: '2022-04-11',
+      comment: 'MainPage 구현',
+    },
+    {
+      content: '과제 제출',
+      directory: '공부',
+      Dday: '2022-02-04',
+      comment: '',
+    },
+    { content: '팩하기', directory: '관리', Dday: '2022-01-25', comment: '' },
+    {
+      content: '파이썬공부',
+      directory: '공부',
+      Dday: '2022-01-25',
+      comment: '조건문, 반복문',
+    },
   ]);
 
   interface DirectoryListType {
@@ -93,6 +109,7 @@ function MainPage({ userId }: Props) {
                   directory={obj.directory}
                   Dday={obj.Dday}
                   directories={directories}
+                  comment={obj.comment}
                 />
               );
             })
@@ -110,6 +127,7 @@ function MainPage({ userId }: Props) {
                     directory={obj.directory}
                     Dday={obj.Dday}
                     directories={directories}
+                    comment={obj.comment}
                   />
                 );
               })
@@ -126,6 +144,7 @@ function MainPage({ userId }: Props) {
                     directory={obj.directory}
                     Dday={obj.Dday}
                     directories={directories}
+                    comment={obj.comment}
                   />
                 );
               })}

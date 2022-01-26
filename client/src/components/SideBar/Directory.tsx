@@ -181,6 +181,29 @@ function Directory({ name, directories, setDirectories }: Props) {
         {name === 'Today' || name === 'All' ? null : (
           <DirectoryBtn onClick={DirectoryRightBtnClick}>...</DirectoryBtn>
         )}
+
+        {click ? (
+          <Modal>
+            {edit || del ? null : (
+              <EditDelteBtnContainer>
+                <Edit onClick={EditClick}>수정하기</Edit>
+                <Delete onClick={DeleteClick}>삭제하기</Delete>
+              </EditDelteBtnContainer>
+            )}
+
+            {edit ? (
+              <EditBox>
+                <EditInput value={newName} onChange={onChange} />
+                <button onClick={EditBtnFunc}>수정</button>
+              </EditBox>
+            ) : null}
+            {del ? (
+              <DelBox>
+                <DelBtn onClick={DelBtnFunc}>삭제하기</DelBtn>
+              </DelBox>
+            ) : null}
+          </Modal>
+        ) : null}
       </Container>
     </div>
   );

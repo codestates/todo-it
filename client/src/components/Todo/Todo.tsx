@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import Comment from './Comment';
+import { BsChatLeftText } from 'react-icons/bs';
 
 const Todo = styled.div`
   &:hover {
@@ -13,6 +15,7 @@ const Todo = styled.div`
   min-height: 8vh;
   box-shadow: 1px 1px 2px rgb(184, 184, 184), -1px -1px 2px #ffffff;
   align-items: center;
+  cursor: pointer;
   > div > div.todoBtn {
     display: flex;
     justify-content: center;
@@ -46,6 +49,8 @@ const TodoInfo = styled.div`
   display: flex;
   align-items: center;
   padding-left: 3vw;
+  overflow: auto;
+  word-break: normal;
   /* justify-content: center; */
 `;
 
@@ -53,6 +58,7 @@ interface todoListType {
   content: string;
   directory: string;
   Dday: string;
+  comment: string;
 }
 interface DirectoryListType {
   directoryId: number;
@@ -66,6 +72,7 @@ interface Props {
   directory: string;
   Dday: string;
   directories: DirectoryListType[];
+  comment: string;
 }
 
 function Todos({
@@ -76,6 +83,7 @@ function Todos({
   directory,
   Dday,
   directories,
+  comment,
 }: Props) {
   const [select, setSelect] = useState<boolean>(false);
   const [editBtn, setEditBtn] = useState(false);
@@ -83,6 +91,9 @@ function Todos({
   const [editName, setEditName] = useState(content);
   const [selectDirectory, setSelectDirectory] = useState(directory);
   const [calendarValue, setCalendarValue] = useState(Dday);
+  const [addComment, setAddComment] = useState(comment);
+  const [isCommentOpen, setIsCommentOpen] = useState(false);
+
   const CheckboxClick = () => {
     setSelect(!select);
   };
@@ -121,7 +132,12 @@ function Todos({
     let newTodoList = [
       ...todoList.slice(undefined, index),
       ...[
-        { content: editName, directory: selectDirectory, Dday: calendarValue },
+        {
+          content: editName,
+          directory: selectDirectory,
+          Dday: calendarValue,
+          comment: addComment,
+        },
       ],
       ...todoList.slice(index + 1),
     ];
@@ -134,6 +150,9 @@ function Todos({
     <>
       <Todo
         style={select ? { color: 'gray', textDecoration: 'line-through' } : {}}
+        onClick={() => {
+          setIsCommentOpen(!isCommentOpen);
+        }}
       >
         <Box
           style={{
@@ -145,7 +164,15 @@ function Todos({
           <Checkbox onChange={CheckboxClick} type="checkbox" select={select} />
         </Box>
         <Box>
-          <TodoInfo style={{ flex: '1' }}>{content}</TodoInfo>
+          <TodoInfo style={{ flex: '1', maxWidth: '65%' }}>
+            {content}{' '}
+            {comment.length === 0 ? (
+              ''
+            ) : (
+              <BsChatLeftText style={{ margin: '20px' }} />
+            )}
+          </TodoInfo>
+
           <TodoInfo style={{ padding: '0 40px' }}>{directory}</TodoInfo>
           <TodoInfo style={{ padding: '0 40px' }}>{Dday}</TodoInfo>
           <div className="todoBtn" onClick={onClick}>
@@ -153,6 +180,8 @@ function Todos({
           </div>
         </Box>
       </Todo>
+
+      {isCommentOpen ? <Comment comment={comment}></Comment> : ''}
 
       {click ? (
         <div>

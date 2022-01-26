@@ -54,7 +54,11 @@ const BtnContainer = styled.div`
   line-height: 30px;
 `;
 
-function Header() {
+interface Iprops {
+  LogoutHandler: () => void;
+}
+
+function Header({ LogoutHandler }: Iprops) {
   const username = 'user';
 
   const [teamModal, setTeamModal] = useState<boolean>(false);
@@ -73,13 +77,26 @@ function Header() {
         <TeamModal teamModal={teamModal} setTeamModal={setTeamModal} />
       ) : null}
       {userModal ? (
-        <UserModal userModal={userModal} setUserModal={setUserModal} />
+        <UserModal
+          userModal={userModal}
+          setUserModal={setUserModal}
+          LogoutHandler={LogoutHandler}
+        />
       ) : null}
-      <Container>
+      <Container
+        onClick={() => {
+          setUserModal(false);
+          setTeamModal(false);
+        }}
+      >
         <NavLink to="/">
           <Logo src={logo}></Logo>
         </NavLink>
-        <BtnContainer>
+        <BtnContainer
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
           <Teambtn onClick={TeamOpen}>T</Teambtn>
           <Username onClick={UserOpen}>{username}</Username>
         </BtnContainer>

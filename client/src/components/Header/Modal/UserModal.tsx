@@ -2,6 +2,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import '../../../fonts/font.css';
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
+import axios from 'axios';
 
 const ModalContainer = styled.div`
   position: fixed;
@@ -39,23 +41,33 @@ const Btn = styled.div`
   font-family: 'Y_Spotlight';
   font-weight: normal;
   text-align: center;
+  color: black;
 `;
 
 interface Props {
   userModal: boolean;
   setUserModal(value: boolean): void;
+  LogoutHandler: () => void;
 }
 
-function UserModal({ userModal, setUserModal }: Props) {
-  // const UserInfoBtnClick = () => {
-  //   axios
-  //     .get(`https://localhost:8000/users/${userId}`, { withCredentials: true })
-  //     .then((res) => window.location.href = 'https://localhost:3000/')
-  //     .catch((err) => alert(err));
-  // };
+
+function UserModal({ userModal, setUserModal, LogoutHandler }: Props) {
 
   const onClick = () => {
     setUserModal(!userModal);
+  };
+
+  const LogoutAxiosHandler = () => {
+    axios
+      .post('https://localhost:8000/auth/logout', null, {
+        withCredentials: true,
+      })
+      .then(() => {
+        setUserModal(false);
+        LogoutHandler();
+        window.location.href = 'https://localhost:3000/';
+      })
+      .catch((e) => alert(e));
   };
 
   return (
@@ -63,10 +75,10 @@ function UserModal({ userModal, setUserModal }: Props) {
       <ModalContainer>
         <ModalContent>
           <Btn>유저 정보</Btn>
-
-          <Btn>회원 정보 수정</Btn>
-
-          <Btn>로그아웃</Btn>
+          <NavLink to="/profile">
+            <Btn>회원 정보 수정</Btn>
+          </NavLink>
+          <Btn onClick={LogoutAxiosHandler}>로그아웃</Btn>
         </ModalContent>
       </ModalContainer>
       <Overlay onClick={onClick} />
