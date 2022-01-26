@@ -2,7 +2,7 @@ import { Directory } from '../../directories/entities/directory.entity';
 import { User } from 'src/users/entities/user.entity';
 import { Column, Entity, ManyToOne } from 'typeorm';
 import { CommonEntity } from 'src/common/entities/common.entity';
-import { IsBoolean, IsDate, IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsDateString, IsNotEmpty, IsString } from 'class-validator';
 
 @Entity()
 export class Todo extends CommonEntity {
@@ -19,7 +19,7 @@ export class Todo extends CommonEntity {
   comment: string;
 
   @Column({ type: 'timestamp', nullable: true })
-  @IsDate()
+  @IsDateString()
   deadline: Date | null;
 
   @ManyToOne(() => User, (user) => user.todos, {
