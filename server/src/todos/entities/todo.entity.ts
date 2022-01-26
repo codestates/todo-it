@@ -1,3 +1,4 @@
+import { Directory } from '../../directories/entities/directory.entity';
 import { User } from 'src/users/entities/user.entity';
 import { Column, Entity, ManyToOne } from 'typeorm';
 import { CommonEntity } from 'src/common/entities/common.entity';
@@ -23,4 +24,9 @@ export class Todo extends CommonEntity {
     onDelete: 'CASCADE',
   })
   user: User;
+
+  @ManyToOne(() => Directory, (directory) => directory.todos, {
+    nullable: true,
+  })
+  directory: Directory | null;
 }
