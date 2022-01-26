@@ -64,7 +64,9 @@ function App() {
         />
         <Route
           path="/userinfosetting"
-          element={<UserInfoSettingPage></UserInfoSettingPage>}
+          element={
+            <UserInfoSettingPage userInfo={userInfo}></UserInfoSettingPage>
+          }
         />
       </Routes>
     </BrowserRouter>

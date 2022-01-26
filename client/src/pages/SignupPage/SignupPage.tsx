@@ -7,7 +7,7 @@ const SignupContainer = styled.div`
 `;
 
 export const Body = styled.div`
-  margin: 15vh 15vh 15vh 15vh;
+  margin: 15vh 0;
   height: 100%;
   width: 100%;
 `;
