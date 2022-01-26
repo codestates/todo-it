@@ -55,10 +55,15 @@ const BtnContainer = styled.div`
 
 interface Iprops {
   LogoutHandler: () => void;
+  userInfo: {
+    id?: number;
+    nickname?: string;
+    email?: string;
+  };
 }
 
-function Header({ LogoutHandler }: Iprops) {
-  const username = 'user';
+function Header({ LogoutHandler, userInfo }: Iprops) {
+  // const username = 'user';
 
   const [teamModal, setTeamModal] = useState<boolean>(false);
   const [userModal, setUserModal] = useState<boolean>(false);
@@ -80,6 +85,7 @@ function Header({ LogoutHandler }: Iprops) {
           userModal={userModal}
           setUserModal={setUserModal}
           LogoutHandler={LogoutHandler}
+          email={userInfo.email}
         />
       ) : null}
       <Container
@@ -97,7 +103,12 @@ function Header({ LogoutHandler }: Iprops) {
           }}
         >
           {/* <Teambtn onClick={TeamOpen}>T</Teambtn> */}
-          <Username onClick={UserOpen}>{username}</Username>
+          <Username
+            style={userInfo.nickname === '' ? { display: 'none' } : {}}
+            onClick={UserOpen}
+          >
+            {userInfo.nickname}
+          </Username>
         </BtnContainer>
       </Container>
     </div>

@@ -22,7 +22,7 @@ interface DirectoryListType {
 }
 
 interface Props {
-  userId: number;
+  userId?: number;
   directories: DirectoryListType[];
   setDirectories(arr: DirectoryListType[]): void;
   clickDirectory: string;

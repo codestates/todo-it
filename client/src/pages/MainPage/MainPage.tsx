@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import SideBar from '../../components/SideBar/SideBar';
 import Todo from '../../components/Todo/Todo';
 import AddTodo from '../../components/Todo/AddTodo';
+import axios from 'axios';
 
 const Container = styled.div`
   width: 100%;
@@ -20,7 +21,7 @@ const TodosContainer = styled.div`
   overflow-y: scroll;
 `;
 interface Props {
-  userId: number;
+  userId?: number;
 }
 
 function MainPage({ userId }: Props) {
@@ -32,6 +33,15 @@ function MainPage({ userId }: Props) {
     Dday: string;
     comment: string;
   }
+
+  interface Todo {
+    id?: number;
+    content?: string;
+    isDone?: boolean;
+    comment?: string;
+    deadline?: string;
+  }
+
   //dummyData
   const [todoList, setTodoList] = useState<todoListType[]>([
     { content: '책읽기', directory: '공부', Dday: '2022-01-31', comment: '' },
@@ -57,6 +67,8 @@ function MainPage({ userId }: Props) {
     },
   ]);
 
+  const [todo, setTodo] = useState<Todo>({});
+
   interface DirectoryListType {
     directoryId: number;
     directory: string;
@@ -67,6 +79,19 @@ function MainPage({ userId }: Props) {
     { directoryId: 1, directory: '관리' },
     { directoryId: 2, directory: '개발' },
   ]);
+
+  useEffect(() => {
+    axios
+      .get('https://localhost:8000/users/me/todos', {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      })
+      .then((res) => {
+        setTodo(res.data);
+        console.log(todo);
+      })
+      .catch((e) => console.log(e));
+  }, []);
 
   const DirectoryClicked = (value: string) => {
     setClickDirectory(value);
