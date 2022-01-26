@@ -54,24 +54,26 @@ const TodoInfo = styled.div`
 `;
 
 interface todoListType {
-  content: string;
-  directory: string;
-  Dday: string;
-  comment: string;
+  id?: number;
+  content?: string;
+  isDone?: boolean;
+  comment?: string;
+  deadline?: string;
+  directoryId?: number;
 }
 interface DirectoryListType {
-  directoryId: number;
-  directory: string;
+  id: number;
+  name: string;
 }
 interface Props {
   index: number;
   todoList: todoListType[];
   setTodoList(arr: todoListType[]): void;
-  content: string;
-  directory: string;
-  Dday: string;
+  content?: string;
+  directoryId?: number;
+  Dday?: string;
   directories: DirectoryListType[];
-  comment: string;
+  comment?: string;
 }
 
 function Todos({
@@ -79,7 +81,7 @@ function Todos({
   todoList,
   setTodoList,
   content,
-  directory,
+  directoryId,
   Dday,
   directories,
   comment,
@@ -88,7 +90,7 @@ function Todos({
   const [editBtn, setEditBtn] = useState(false);
   const [click, setClick] = useState(false);
   const [editName, setEditName] = useState(content);
-  const [selectDirectory, setSelectDirectory] = useState(directory);
+  const [selectDirectory, setSelectDirectory] = useState(directoryId);
   const [calendarValue, setCalendarValue] = useState(Dday);
   const [addComment, setAddComment] = useState(comment);
   const [isCommentOpen, setIsCommentOpen] = useState(false);
@@ -120,7 +122,7 @@ function Todos({
   };
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
-    setSelectDirectory(value);
+    setSelectDirectory(+value);
   };
   const dateSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -162,7 +164,7 @@ function Todos({
         <Box>
           <TodoInfo style={{ flex: '1', maxWidth: '65%' }}>
             {content}{' '}
-            {comment.length === 0 ? (
+            {!comment ? (
               ''
             ) : (
               <BsChatLeftText
@@ -174,7 +176,9 @@ function Todos({
             )}
           </TodoInfo>
 
-          <TodoInfo style={{ padding: '0 40px' }}>{directory}</TodoInfo>
+          <TodoInfo style={{ padding: '0 40px' }}>
+            {directories.filter((obj) => obj.id === directoryId)[0].name}
+          </TodoInfo>
           <TodoInfo style={{ padding: '0 40px' }}>{Dday}</TodoInfo>
           <div className="todoBtn" onClick={onClick}>
             ...
@@ -193,11 +197,11 @@ function Todos({
       {editBtn ? (
         <div>
           <select onChange={handleSelect}>
-            {[{ directory: '=== 선택 ===' }, ...directories].map(
+            {[{ name: 'Directory', id: -1 }, ...directories].map(
               (obj, index) => {
                 return (
-                  <option key={index} value={obj.directory}>
-                    {obj.directory}
+                  <option key={index} value={obj.id}>
+                    {obj.name}
                   </option>
                 );
               }

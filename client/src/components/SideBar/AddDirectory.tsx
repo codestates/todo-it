@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import '../../fonts/font.css';
+import axios from 'axios';
 
 const Container = styled.div`
   width: 100%;
@@ -59,15 +60,9 @@ interface DirectoryListType {
   directory: string;
 }
 
-interface Props {
-  Directories: DirectoryListType[];
-  setDirectories(arr: DirectoryListType[]): void;
-}
-
-function AddDirectory({ Directories, setDirectories }: Props) {
+function AddDirectory() {
   const [click, setClick] = useState(false);
   const [directoryName, setDirectoryName] = useState('');
-  const [InputIsEmpty, setInputIsEmpty] = useState(false);
 
   const onClick = () => {
     setClick(true);
@@ -80,15 +75,21 @@ function AddDirectory({ Directories, setDirectories }: Props) {
 
   const AddDirectory = () => {
     if (directoryName.length === 0) {
-      setInputIsEmpty(true);
       return;
     }
-    setInputIsEmpty(false);
-    const DirectoryId = Directories.length;
-    let newDirectory = { directoryId: DirectoryId, directory: directoryName };
-    setDirectories([...Directories, newDirectory]);
-    setDirectoryName('');
-    setClick(false);
+    axios
+      .post(
+        'https://localhost:8000/users/me/directories',
+        { name: directoryName },
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        window.location.href = 'https://localhost:3000/';
+      })
+      .catch((e) => console.log(e));
   };
 
   const Cancel = () => {

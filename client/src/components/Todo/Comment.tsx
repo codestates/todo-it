@@ -13,7 +13,7 @@ const CommentValue = styled.div`
 `;
 
 interface Iprops {
-  comment: string;
+  comment?: string;
 }
 
 function Comment({ comment }: Iprops) {
