@@ -1,3 +1,4 @@
+import { UserDirectoryUpdateDto } from '../dto/user-directory-update.dto';
 import { UserDirectoryAddDto } from '../dto/user-directory-add.dto';
 import { DirectoriesService } from '../../directories/services/directories.service';
 import { JwtAuthGuard } from 'src/auth/jwt/jwt-auth.guard';
@@ -10,6 +11,7 @@ import {
   HttpStatus,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   UseGuards,
 } from '@nestjs/common';
@@ -35,6 +37,19 @@ export class UsersMeDirectoriesController {
     return this.directoriesService.addDirectoryByUserId(
       userId,
       userDirectoryAddDto
+    );
+  }
+
+  @Patch(':id')
+  updateTodo(
+    @CurrentUser() { userId }: JwtValidatePayload,
+    @Param('id', ParseIntPipe) directoryId: number,
+    @Body() userDirectoryUpdateDto: UserDirectoryUpdateDto
+  ) {
+    return this.directoriesService.checkAndUpdateDirectoryByDirectoryId(
+      directoryId,
+      userDirectoryUpdateDto,
+      userId
     );
   }
 

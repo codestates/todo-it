@@ -1,3 +1,4 @@
+import { UserDirectoryUpdateDto } from './../../users/dto/user-directory-update.dto';
 import { Directory } from '../entities/directory.entity';
 import { UserDirectoryAddDto } from '../../users/dto/user-directory-add.dto';
 import { UserRepository } from '../../users/repositories/user.repository';
@@ -28,6 +29,26 @@ export class DirectoriesService {
         user: await this.userRepository.findOneOrFail(userId),
       })
     );
+  }
+
+  async checkAndUpdateDirectoryByDirectoryId(
+    directoryId: number,
+    { name }: UserDirectoryUpdateDto,
+    userId: number
+  ) {
+    const directory = await this.directoryRepository.findOneOrFail(
+      directoryId,
+      {
+        relations: ['user'],
+      }
+    );
+    if (directory.user.id !== userId) {
+      throw new ForbiddenException('자신의 Directory가 아닙니다.');
+    }
+    if (name !== undefined) {
+      directory.name = name;
+    }
+    return pickDirectoryData(await directory.save());
   }
 
   async checkAndDeleteDirectoryByDirectoryId(
