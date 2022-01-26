@@ -21,7 +21,7 @@ import { CurrentUser } from 'src/common/decorators/current-user.decorator';
 
 @Controller('users/me/todos')
 @UseGuards(JwtAuthGuard)
-export class UserMeTodosController {
+export class UsersMeTodosController {
   constructor(
     private readonly usersService: UsersService,
     private readonly todosService: TodosService

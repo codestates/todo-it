@@ -1,3 +1,4 @@
+import { Directory } from '../../directories/entities/directory.entity';
 import { Todo } from '../../todos/entities/todo.entity';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { CommonEntity } from 'src/common/entities/common.entity';
@@ -22,4 +23,7 @@ export class User extends CommonEntity {
 
   @OneToMany(() => Todo, (todo) => todo.user, { cascade: true })
   todos: Todo[];
+
+  @OneToMany(() => Directory, (directory) => directory.user, { cascade: true })
+  directories: Directory[];
 }

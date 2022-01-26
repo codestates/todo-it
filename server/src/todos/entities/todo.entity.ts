@@ -30,6 +30,7 @@ export class Todo extends CommonEntity {
 
   @ManyToOne(() => Directory, (directory) => directory.todos, {
     nullable: true,
+    onDelete: 'CASCADE',
   })
   directory: Directory | null;
 }
