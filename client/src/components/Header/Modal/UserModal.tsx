@@ -72,7 +72,17 @@ function UserModal({ userModal, setUserModal, LogoutHandler, email }: Props) {
     <div>
       <ModalContainer>
         <ModalContent>
-          <Btn>{email}</Btn>
+          <div
+            style={{
+              fontSize: '16px',
+              fontFamily: 'Y_Spotlight',
+              fontWeight: 'normal',
+              textAlign: 'center',
+              color: 'black',
+            }}
+          >
+            {email}
+          </div>
           <NavLink to="/profile">
             <Btn onClick={onClick}>회원 정보 수정</Btn>
           </NavLink>
