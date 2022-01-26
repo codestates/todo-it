@@ -1,6 +1,7 @@
 import * as Joi from 'joi';
+import { EnvironmentVariables } from 'src/env';
 
-export const envValidationSchema = Joi.object({
+export const envValidationSchema = Joi.object<EnvironmentVariables, true>({
   PORT: Joi.number().port().default(8000),
   DB_HOST: Joi.string().hostname().default('127.0.0.1'),
   DB_PORT: Joi.number().port().default(3306),
