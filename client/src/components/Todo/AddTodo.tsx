@@ -12,9 +12,12 @@ const DirectorySelect = styled.div``;
 
 const PlusBtnContainer = styled.div`
   height: 5vh;
-  text-align: right;
+  text-align: center;
+  /* font-size: large; */
+  font-weight: bold;
   padding-top: 20px;
   padding-right: 20px;
+  cursor: pointer;
 `;
 const CalendarBtn = styled.input`
   /* all: unset;
@@ -101,17 +104,19 @@ function AddTodo({ directories, todoList, setTodoList }: Props) {
   return (
     <>
       {!addBtnClick ? (
-        <PlusBtnContainer onClick={AddBtnFunc}>+</PlusBtnContainer>
+        <PlusBtnContainer onClick={AddBtnFunc}>+ New Todo</PlusBtnContainer>
       ) : (
         <AddContainer>
           <select onChange={handleSelect}>
-            {directories.map((obj, index) => {
-              return (
-                <option key={index} value={obj.directory}>
-                  {obj.directory}
-                </option>
-              );
-            })}
+            {[{ directory: '=== 선택 ===' }, ...directories].map(
+              (obj, index) => {
+                return (
+                  <option key={index} value={obj.directory}>
+                    {obj.directory}
+                  </option>
+                );
+              }
+            )}
           </select>
           <AddTodoInput onChange={InputOnChange} value={name}></AddTodoInput>
           <CalendarBtn

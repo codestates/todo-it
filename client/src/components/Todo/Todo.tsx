@@ -2,21 +2,36 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Todo = styled.div`
+  &:hover {
+    > div > div.todoBtn {
+      color: black;
+    }
+  }
   width: 100%;
-  height: 15vh;
+  display: flex;
+  /* height: 10vh; */
+  min-height: 8vh;
   box-shadow: 1px 1px 2px rgb(184, 184, 184), -1px -1px 2px #ffffff;
+  align-items: center;
+  > div > div.todoBtn {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    font-size: large;
+    font-weight: bold;
+    float: right;
+    min-width: 50px;
+    color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+  }
 `;
 
-const Box = styled.div<{ padding: number }>`
-  float: left;
-  width: ${(props) => props.padding}%;
+const Box = styled.div`
+  width: 90%;
+  display: flex;
 `;
 
 const Checkbox = styled.input<{ select: boolean }>`
-  {
-    select ? 
-    color: gray;
-  }
   width: 20px;
   height: 20px;
 `;
@@ -25,6 +40,13 @@ const CalendarBtn = styled.input`
   /* all: unset;
   padding-left: 10px;
   padding-right: 10px; */
+`;
+
+const TodoInfo = styled.div`
+  display: flex;
+  align-items: center;
+  padding-left: 3vw;
+  /* justify-content: center; */
 `;
 
 interface todoListType {
@@ -110,20 +132,25 @@ function Todos({
 
   return (
     <>
-      <Todo>
-        <Box padding={5}>
+      <Todo
+        style={select ? { color: 'gray', textDecoration: 'line-through' } : {}}
+      >
+        <Box
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '5%',
+          }}
+        >
           <Checkbox onChange={CheckboxClick} type="checkbox" select={select} />
         </Box>
-        <Box padding={70}>
-          <div>{content}</div>
-          <div>{directory}</div>
-        </Box>
-        <Box padding={2}>
-          {/* TODO: CreatedAt */}
-          <div>{Dday}</div>
-        </Box>
-        <Box padding={20}>
-          <div onClick={onClick}>...</div>
+        <Box>
+          <TodoInfo style={{ flex: '1' }}>{content}</TodoInfo>
+          <TodoInfo style={{ padding: '0 40px' }}>{directory}</TodoInfo>
+          <TodoInfo style={{ padding: '0 40px' }}>{Dday}</TodoInfo>
+          <div className="todoBtn" onClick={onClick}>
+            ...
+          </div>
         </Box>
       </Todo>
 
@@ -136,13 +163,15 @@ function Todos({
       {editBtn ? (
         <div>
           <select onChange={handleSelect}>
-            {directories.map((obj, index) => {
-              return (
-                <option key={index} value={obj.directory}>
-                  {obj.directory}
-                </option>
-              );
-            })}
+            {[{ directory: '=== 선택 ===' }, ...directories].map(
+              (obj, index) => {
+                return (
+                  <option key={index} value={obj.directory}>
+                    {obj.directory}
+                  </option>
+                );
+              }
+            )}
           </select>
           <input onChange={onChange} value={editName}></input>
           <CalendarBtn

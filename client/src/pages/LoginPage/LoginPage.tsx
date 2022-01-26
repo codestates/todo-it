@@ -11,6 +11,7 @@ import {
   Warning,
 } from '../SignupPage/SignupPage';
 import axios from 'axios';
+import { NavLink } from 'react-router-dom';
 
 const LoginContainer = styled.div``;
 
@@ -81,7 +82,9 @@ export const LoginPage = ({ LoginHandler }: Iprops) => {
         </StyledDiv>
         <ButtonBox>
           <StyledButton>비밀번호 찾기</StyledButton>
-          <StyledButton>회원가입</StyledButton>
+          <NavLink to="/signup">
+            <StyledButton>회원가입</StyledButton>
+          </NavLink>
           <StyledButton onClick={LoginClickHandler}>로그인</StyledButton>
         </ButtonBox>
       </Body>
