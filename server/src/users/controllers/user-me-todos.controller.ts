@@ -1,3 +1,4 @@
+import { UserTodoUpdateDto } from '../dto/user-todo-update.dto';
 import { TodosService } from '../../todos/services/todos.service';
 import { UserTodoAddDto } from '../dto/user-todo-add.dto';
 import { JwtAuthGuard } from 'src/auth/jwt/jwt-auth.guard';
@@ -11,6 +12,7 @@ import {
   HttpStatus,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   UseGuards,
 } from '@nestjs/common';
@@ -37,6 +39,19 @@ export class UserMeTodosController {
     @Body() userTodoAddDto: UserTodoAddDto
   ) {
     return this.todosService.addTodoByUserId(userId, userTodoAddDto);
+  }
+
+  @Patch(':id')
+  async updateTodo(
+    @CurrentUser() { userId }: JwtValidatePayload,
+    @Param('id', ParseIntPipe) todoId: number,
+    @Body() userTodoUpdateDto: UserTodoUpdateDto
+  ) {
+    return this.todosService.checkAndUpdateTodoByTodoId(
+      todoId,
+      userTodoUpdateDto,
+      userId
+    );
   }
 
   @Delete(':id')
