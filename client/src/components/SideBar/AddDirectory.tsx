@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import '../../fonts/font.css';
 
+const Container = styled.div`
+  width: 100%;
+  height: 18%;
+`;
+
 const AddListContainer = styled.div`
   background-color: #708870;
   height: 10vh;
@@ -62,6 +67,7 @@ interface Props {
 function AddDirectory({ Directories, setDirectories }: Props) {
   const [click, setClick] = useState(false);
   const [directoryName, setDirectoryName] = useState('');
+  const [InputIsEmpty, setInputIsEmpty] = useState(false);
 
   const onClick = () => {
     setClick(true);
@@ -73,6 +79,11 @@ function AddDirectory({ Directories, setDirectories }: Props) {
   };
 
   const AddDirectory = () => {
+    if (directoryName.length === 0) {
+      setInputIsEmpty(true);
+      return;
+    }
+    setInputIsEmpty(false);
     const DirectoryId = Directories.length;
     let newDirectory = { directoryId: DirectoryId, directory: directoryName };
     setDirectories([...Directories, newDirectory]);
@@ -85,7 +96,7 @@ function AddDirectory({ Directories, setDirectories }: Props) {
   };
 
   return (
-    <div>
+    <Container>
       {!click ? (
         <AddBtn onClick={onClick}>+ New List</AddBtn>
       ) : (
@@ -95,7 +106,7 @@ function AddDirectory({ Directories, setDirectories }: Props) {
           <SubmitBtn onClick={Cancel}>취소</SubmitBtn>
         </AddListContainer>
       )}
-    </div>
+    </Container>
   );
 }
 

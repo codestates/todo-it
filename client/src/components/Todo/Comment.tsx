@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { BsArrowReturnRight } from 'react-icons/bs';
+import '../../fonts/font.css';
 
 const CommentContainer = styled.div`
   display: flex;
+  font-family: 'LeferiPoint-WhiteObliqueA';
 `;
 
 const CommentValue = styled.div`

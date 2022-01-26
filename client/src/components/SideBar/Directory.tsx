@@ -12,7 +12,8 @@ const Container = styled.div`
   padding: 3px;
   margin: 3px;
   border-radius: 10px;
-  background-color: #a8c4a6;
+  background-color: ${(props) => props.color};
+  /* background-color: #a8c4a6; */
 `;
 
 const Name = styled.div`
@@ -111,10 +112,16 @@ interface DirectoryListType {
 interface Props {
   name: string;
   directories: DirectoryListType[];
+  clickDirectory: string;
   setDirectories(arr: DirectoryListType[]): void;
 }
 
-function Directory({ name, directories, setDirectories }: Props) {
+function Directory({
+  name,
+  clickDirectory,
+  directories,
+  setDirectories,
+}: Props) {
   const [click, setClick] = useState(false);
   const [edit, setEdit] = useState(false);
   const [del, setDel] = useState(false);
@@ -175,7 +182,7 @@ function Directory({ name, directories, setDirectories }: Props) {
 
   return (
     <div>
-      <Container>
+      <Container color={clickDirectory === name ? '#a8c4a6' : '#f7f7f7'}>
         <Name>{name}</Name>
 
         {click ? (

@@ -7,11 +7,16 @@ const Sidebar = styled.div`
   float: left;
   width: 30%;
   height: 100%;
-  overflow-y: scroll;
-  display: table;
+  //display: table;
+  display: flex;
+  flex-direction: column;
   box-shadow: 2px 2px 5px #b8b8b8, -2px -2px 5px #ffffff;
 `;
 const DirectoriyContainer = styled.div`
+  flex: 1;
+  width: 100%;
+  height: 92%;
+  overflow-y: scroll;
   background-color: #fff;
   align-items: center;
 `;
@@ -41,9 +46,13 @@ function SideBar({
   return (
     <Sidebar>
       <DirectoriyContainer>
-        <div onClick={() => DirectoryClicked('All')}>
+        <div
+          style={{ marginTop: '5px' }}
+          onClick={() => DirectoryClicked('All')}
+        >
           <Directory
             name="All"
+            clickDirectory={clickDirectory}
             directories={directories}
             setDirectories={setDirectories}
           />
@@ -51,6 +60,7 @@ function SideBar({
         <div onClick={() => DirectoryClicked('Today')}>
           <Directory
             name="Today"
+            clickDirectory={clickDirectory}
             directories={directories}
             setDirectories={setDirectories}
           ></Directory>
@@ -58,6 +68,7 @@ function SideBar({
         {directories.map((obj, index) => (
           <div key={index} onClick={() => DirectoryClicked(`${obj.directory}`)}>
             <Directory
+              clickDirectory={clickDirectory}
               name={obj.directory}
               directories={directories}
               setDirectories={setDirectories}
