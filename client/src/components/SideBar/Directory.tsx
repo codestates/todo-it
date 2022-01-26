@@ -88,12 +88,14 @@ const EditBtn = styled.div`
   &:hover {
     font-weight: bold;
   }
+  margin-left: 5px;
+  margin-right: 5px;
   font-size: 13px;
   font-family: 'IBMPlexSansKR-Light';
 `;
 
 const DelBox = styled.div`
-  display: block;
+  display: inline-flex;
   padding: 20px;
 `;
 
@@ -101,6 +103,8 @@ const DelBtn = styled.div`
   &:hover {
     font-weight: bold;
   }
+  margin-left: 5px;
+  margin-right: 5px;
   font-family: 'IBMPlexSansKR-Light';
 `;
 
@@ -143,6 +147,9 @@ function Directory({
   };
 
   const EditBtnFunc = () => {
+    if (newName.length === 0) {
+      return;
+    }
     setEdit(false);
     //let directories = [...Directories];
     let newDirectoryList = directories.slice();
@@ -157,6 +164,7 @@ function Directory({
         // directories.concat(directories.slice(i + 1));
         break;
       }
+      setnewName('');
     }
     // directories.map((directoryname, index) => {
     //   return directoryname === name ? (directoryname = newName) : true;
@@ -179,6 +187,13 @@ function Directory({
     setDirectories(newDirectoryList);
     setClick(false);
   };
+  const CancelEditBtnFunc = () => {
+    setEdit(false);
+    setnewName('');
+  };
+  const CancelDelBtnFunc = () => {
+    setDel(false);
+  };
 
   return (
     <div>
@@ -197,19 +212,25 @@ function Directory({
             {edit ? (
               <EditBox>
                 <EditInput value={newName} onChange={onChange} />
-                <EditBtn onClick={EditBtnFunc}>수정</EditBtn>
+                <div style={{ display: 'inline-flex', flexFlow: 'row wrap' }}>
+                  <EditBtn onClick={EditBtnFunc}>수정</EditBtn>
+                  <EditBtn onClick={CancelEditBtnFunc}>취소</EditBtn>
+                </div>
               </EditBox>
             ) : null}
             {del ? (
               <DelBox>
                 <DelBtn onClick={DelBtnFunc}>삭제</DelBtn>
+                <DelBtn onClick={CancelDelBtnFunc}>취소</DelBtn>
               </DelBox>
             ) : null}
           </Modal>
         ) : null}
 
         {name === 'Today' || name === 'All' ? null : (
-          <DirectoryBtn onClick={DirectoryRightBtnClick}>...</DirectoryBtn>
+          <div onClick={(e) => e.stopPropagation()}>
+            <DirectoryBtn onClick={DirectoryRightBtnClick}>...</DirectoryBtn>
+          </div>
         )}
       </Container>
     </div>
