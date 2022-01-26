@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import '../../fonts/font.css';
 // import MainPage from '../../pages/MainPage/MainPage';
 import logo from './header_logo.png';
-import TeamModal from './Modal/TeamModal';
+//import TeamModal from './Modal/TeamModal';
 import UserModal from './Modal/UserModal';
 const Container = styled.div`
   background-color: #fff;
@@ -33,7 +33,6 @@ const Username = styled.button`
   font-size: 20px;
   color: black;
   font-family: 'Vitro_core';
-
   //box-shadow: 2px 2px 5px #b8b8b8, -2px -2px 5px #ffffff;
 `;
 
@@ -73,9 +72,9 @@ function Header({ LogoutHandler }: Iprops) {
 
   return (
     <div>
-      {teamModal ? (
+      {/* {teamModal ? (
         <TeamModal teamModal={teamModal} setTeamModal={setTeamModal} />
-      ) : null}
+      ) : null} */}
       {userModal ? (
         <UserModal
           userModal={userModal}
@@ -97,7 +96,7 @@ function Header({ LogoutHandler }: Iprops) {
             e.stopPropagation();
           }}
         >
-          <Teambtn onClick={TeamOpen}>T</Teambtn>
+          {/* <Teambtn onClick={TeamOpen}>T</Teambtn> */}
           <Username onClick={UserOpen}>{username}</Username>
         </BtnContainer>
       </Container>

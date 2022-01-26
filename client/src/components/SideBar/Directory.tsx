@@ -45,10 +45,20 @@ const Modal = styled.div`
 `;
 
 const Delete = styled.div`
+  &:hover {
+    font-weight: bold;
+  }
+  font-family: 'IBMPlexSansKR-Light';
+  font-size: 14px;
   width: 100%;
 `;
 
 const Edit = styled.div`
+  &:hover {
+    font-weight: bold;
+  }
+  font-family: 'IBMPlexSansKR-Light';
+  font-size: 14px;
   width: 100%;
 `;
 
@@ -70,15 +80,28 @@ const EditInput = styled.input`
   border-left: none;
   border-right: none;
   border-bottom: 1px solid gray;
+  font-weight: bold;
+  font-family: 'IBMPlexSansKR-Light';
 `;
-const EditBtn = styled.div``;
+const EditBtn = styled.div`
+  &:hover {
+    font-weight: bold;
+  }
+  font-size: 13px;
+  font-family: 'IBMPlexSansKR-Light';
+`;
 
 const DelBox = styled.div`
   display: block;
   padding: 20px;
 `;
 
-const DelBtn = styled.div``;
+const DelBtn = styled.div`
+  &:hover {
+    font-weight: bold;
+  }
+  font-family: 'IBMPlexSansKR-Light';
+`;
 
 interface DirectoryListType {
   directoryId: number;
@@ -172,7 +195,7 @@ function Directory({ name, directories, setDirectories }: Props) {
             ) : null}
             {del ? (
               <DelBox>
-                <DelBtn onClick={DelBtnFunc}>삭제하기</DelBtn>
+                <DelBtn onClick={DelBtnFunc}>삭제</DelBtn>
               </DelBox>
             ) : null}
           </Modal>
