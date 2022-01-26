@@ -1,7 +1,15 @@
 import { UserDirectoryAddDto } from '../dto/user-directory-add.dto';
 import { DirectoriesService } from '../../directories/services/directories.service';
 import { JwtAuthGuard } from 'src/auth/jwt/jwt-auth.guard';
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { CurrentUser } from 'src/common/decorators/current-user.decorator';
 import { JwtValidatePayload } from 'src/auth/jwt/jwt-validate.payload';
 
@@ -16,6 +24,7 @@ export class UsersMeDirectoriesController {
   }
 
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   addMyDirectory(
     @CurrentUser() { userId }: JwtValidatePayload,
     @Body() userDirectoryAddDto: UserDirectoryAddDto
