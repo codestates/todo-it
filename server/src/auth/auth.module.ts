@@ -10,6 +10,7 @@ import { EnvironmentVariables } from 'src/env';
 
 @Module({
   imports: [
+    ConfigModule,
     TypeOrmModule.forFeature([UserRepository]),
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -17,7 +18,7 @@ import { EnvironmentVariables } from 'src/env';
       useFactory: (
         configService: ConfigService<EnvironmentVariables, true>
       ) => ({
-        secret: configService.get('JWT_SECRET', { infer: true }),
+        secret: configService.get('JWT_SECRET'),
         signOptions: { expiresIn: '30d' },
       }),
     }),
