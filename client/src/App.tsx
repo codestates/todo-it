@@ -9,9 +9,15 @@ import Header from './components/Header/Header';
 import MainPage from './pages/MainPage/MainPage';
 import axios from 'axios';
 
+interface UserInfo {
+  id?: number;
+  nickname?: string;
+  email?: string;
+}
+
 function App() {
   const [isLogin, setIsLogin] = useState(false);
-  const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState<UserInfo>({});
   const [accessToken, setAccessToken] = useState('');
 
   useEffect(() => {
@@ -21,15 +27,16 @@ function App() {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data);
         setUserInfo(res.data);
+        setIsLogin(true);
       })
       .catch((err) => console.log(err));
   }, [isLogin]);
 
-  const LoginHandler = (accessToken: string) => {
+  const LoginHandler = (token: string) => {
     setIsLogin(true);
-    setAccessToken(accessToken);
+    setAccessToken(token);
+    console.log(accessToken);
   };
 
   const LogoutHandler = () => {
@@ -38,13 +45,13 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Header LogoutHandler={LogoutHandler}></Header>
+      <Header LogoutHandler={LogoutHandler} userInfo={userInfo}></Header>
       <Routes>
         <Route
           path="/"
           element={
             isLogin ? (
-              <MainPage userId={1}></MainPage>
+              <MainPage userId={userInfo.id}></MainPage>
             ) : (
               <LoginPage LoginHandler={LoginHandler} />
             )

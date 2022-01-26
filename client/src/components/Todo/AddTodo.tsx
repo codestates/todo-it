@@ -125,7 +125,7 @@ function AddTodo({ directories, todoList, setTodoList }: Props) {
       setIsEmpty(true);
       return;
     }
-    setIsEmpty(true);
+    setIsEmpty(false);
     const todoObj = {
       content: name,
       directory: selectDirectory,

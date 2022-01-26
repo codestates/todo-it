@@ -70,7 +70,7 @@ export const UserInfoSettingPage = () => {
       .patch(
         'https://localhost:8000/users/me',
         {
-          originalPassword: originPassword,
+          oldPassword: originPassword,
           nickname: name,
           newPassword: newpassword,
         },
