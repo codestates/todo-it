@@ -5,9 +5,12 @@ import { UsersService } from '../services/users.service';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
+  Param,
+  ParseIntPipe,
   Post,
   UseGuards,
 } from '@nestjs/common';
@@ -34,5 +37,14 @@ export class UserMeTodosController {
     @Body() userTodoAddDto: UserTodoAddDto
   ) {
     return this.todosService.addTodoByUserId(userId, userTodoAddDto);
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async deleteTodo(
+    @CurrentUser() { userId }: JwtValidatePayload,
+    @Param('id', ParseIntPipe) todoId: number
+  ) {
+    await this.todosService.checkAndDeleteTodoByTodoId(todoId, userId);
   }
 }
