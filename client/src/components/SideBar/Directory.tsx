@@ -209,7 +209,9 @@ function Directory({
         ) : null}
 
         {name === 'Today' || name === 'All' ? null : (
-          <DirectoryBtn onClick={DirectoryRightBtnClick}>...</DirectoryBtn>
+          <div onClick={(e) => e.stopPropagation()}>
+            <DirectoryBtn onClick={DirectoryRightBtnClick}>...</DirectoryBtn>
+          </div>
         )}
       </Container>
     </div>
