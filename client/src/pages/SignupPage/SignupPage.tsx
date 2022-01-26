@@ -33,9 +33,9 @@ export const ValueInput = styled.input`
   width: 200px;
 `;
 
-const VerifyButton = styled.button`
-  margin-left: 10px;
-`;
+// const VerifyButton = styled.button`
+//   margin-left: 10px;
+// `;
 
 export const Warning = styled.div`
   font-size: smaller;
@@ -72,7 +72,7 @@ export const SignupPage = () => {
   const [isPass, setIsPass] = useState(true);
   const [checkPass, setCheckPass] = useState('');
   const [isCheck, setIsCheck] = useState(true);
-  const [isEmailVerified, setIsEmailVerified] = useState(false);
+  // const [isEmailVerified, setIsEmailVerified] = useState(false);
 
   const NameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -138,9 +138,9 @@ export const SignupPage = () => {
       });
   };
 
-  const verifyEmailHandler = () => {
-    // TODO : email 인증 요청
-  };
+  // const verifyEmailHandler = () => {
+  //   // TODO : email 인증 요청
+  // };
 
   return (
     <SignupContainer>

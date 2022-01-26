@@ -17,8 +17,16 @@ const TodosContainer = styled.div`
   float: right;
   width: 70%;
   height: 100%;
-  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
 `;
+
+const TodoScrollContainer = styled.div`
+  overflow-y: scroll;
+  width: 100%;
+  height: 80%;
+`;
+
 interface Props {
   userId: number;
 }
@@ -97,26 +105,9 @@ function MainPage({ userId }: Props) {
           todoList={todoList}
           setTodoList={setTodoList}
         />
-        {clickDirectory === '' || clickDirectory === 'All'
-          ? todoList.map((obj, index) => {
-              return (
-                <Todo
-                  key={index}
-                  index={index}
-                  todoList={todoList}
-                  setTodoList={setTodoList}
-                  content={obj.content}
-                  directory={obj.directory}
-                  Dday={obj.Dday}
-                  directories={directories}
-                  comment={obj.comment}
-                />
-              );
-            })
-          : clickDirectory === 'Today'
-          ? todoList
-              .filter((todoObj) => todoObj.Dday === today)
-              .map((obj, index) => {
+        <TodoScrollContainer>
+          {clickDirectory === '' || clickDirectory === 'All'
+            ? todoList.map((obj, index) => {
                 return (
                   <Todo
                     key={index}
@@ -131,23 +122,42 @@ function MainPage({ userId }: Props) {
                   />
                 );
               })
-          : todoList
-              .filter((todoObj) => todoObj.directory === clickDirectory)
-              .map((obj, index) => {
-                return (
-                  <Todo
-                    key={index}
-                    index={index}
-                    todoList={todoList}
-                    setTodoList={setTodoList}
-                    content={obj.content}
-                    directory={obj.directory}
-                    Dday={obj.Dday}
-                    directories={directories}
-                    comment={obj.comment}
-                  />
-                );
-              })}
+            : clickDirectory === 'Today'
+            ? todoList
+                .filter((todoObj) => todoObj.Dday === today)
+                .map((obj, index) => {
+                  return (
+                    <Todo
+                      key={index}
+                      index={index}
+                      todoList={todoList}
+                      setTodoList={setTodoList}
+                      content={obj.content}
+                      directory={obj.directory}
+                      Dday={obj.Dday}
+                      directories={directories}
+                      comment={obj.comment}
+                    />
+                  );
+                })
+            : todoList
+                .filter((todoObj) => todoObj.directory === clickDirectory)
+                .map((obj, index) => {
+                  return (
+                    <Todo
+                      key={index}
+                      index={index}
+                      todoList={todoList}
+                      setTodoList={setTodoList}
+                      content={obj.content}
+                      directory={obj.directory}
+                      Dday={obj.Dday}
+                      directories={directories}
+                      comment={obj.comment}
+                    />
+                  );
+                })}
+        </TodoScrollContainer>
       </TodosContainer>
     </Container>
   );

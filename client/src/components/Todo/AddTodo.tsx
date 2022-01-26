@@ -3,22 +3,35 @@ import styled from 'styled-components';
 
 const AddContainer = styled.div`
   /* line-height: 15vh; */
+
+  background-color: #a8c4a6;
+  height: 65px;
   width: 100%;
-  padding: 2vh 0;
-  box-shadow: 1px 1px 2px rgb(184, 184, 184), -1px -1px 2px #ffffff;
+  padding: 1vh 0;
+  vertical-align: middle;
+  /* box-shadow: 1px 1px 2px rgb(184, 184, 184), -1px -1px 2px #ffffff; */
 `;
 
 const InputBox = styled.div`
   display: flex;
   justify-content: center;
+  vertical-align: middle;
 `;
 
 const PlusBtnContainer = styled.div`
-  height: 5vh;
+  &:hover {
+    font-weight: bold;
+    color: #3a573a;
+    font-size: 17px;
+  }
+  height: 30px;
   text-align: center;
+  font-family: 'Y_Spotlight';
+  color: #616161;
+  font-size: 16px;
   /* font-size: large; */
-  box-shadow: 1px 1px 2px rgb(184, 184, 184), -1px -1px 2px #ffffff;
-  font-weight: bold;
+  /* box-shadow: 1px 1px 2px rgb(184, 184, 184), -1px -1px 2px #ffffff; */
+  font-weight: middle;
   padding-top: 20px;
   padding-right: 20px;
   cursor: pointer;
@@ -27,15 +40,24 @@ const CalendarBtn = styled.input`
   /* all: unset;
   padding-left: 10px;
   padding-right: 10px; */
+  border: none;
+  height: 38px;
   margin: 10px;
 `;
 
 const CancelBtn = styled.button`
   all: unset;
-  padding: 10px;
+  &:hover {
+    font-weight: bold;
+  }
+  font-family: 'IBMPlexSansKR-Light';
+  font-weight: middle;
   margin: 10px;
-  border: 1px solid black;
+  height: 38px;
+  width: 45px;
+  border: 1px solid none;
   border-radius: 10px;
+  background-color: #fafafa;
   cursor: pointer;
 `;
 
@@ -43,14 +65,22 @@ const AddTodoInput = styled.textarea`
   /* height: 3em; */
   /* width: 20em; */
   /* font-size: 18px; */
+  font-family: 'IBMPlexSansKR-Light';
+  font-size: 18px;
+  border: none;
+  border-right: 0px;
+  border-top: 0px;
+  border-left: 0px;
+  border-bottom: 0px;
   width: 20vw;
+  height: 35px;
   flex: 1;
   margin: 10px;
 `;
 
 const Warning = styled.div`
   font-size: smaller;
-  color: red;
+  color: #b80000;
 `;
 
 interface todoListType {
@@ -131,8 +161,17 @@ function AddTodo({ directories, todoList, setTodoList }: Props) {
       ) : (
         <AddContainer>
           <InputBox>
-            <select style={{ margin: '10px' }} onChange={handleSelect}>
-              {[{ directory: '=== 선택 ===' }, ...directories].map(
+            <select
+              style={{
+                margin: '10px',
+                width: '120px',
+                height: '40px',
+                fontFamily: 'IBMPlexSansKR-Light',
+                border: 'none',
+              }}
+              onChange={handleSelect}
+            >
+              {[{ directory: 'Directory' }, ...directories].map(
                 (obj, index) => {
                   return (
                     <option key={index} value={obj.directory}>
@@ -156,7 +195,16 @@ function AddTodo({ directories, todoList, setTodoList }: Props) {
             <CancelBtn onClick={TodoAddFunc}>확인</CancelBtn>
             <CancelBtn onClick={CancelFunc}>취소</CancelBtn>
           </InputBox>
-          <Warning style={isEmpty ? {} : { display: 'none' }}>
+          <Warning
+            style={
+              isEmpty
+                ? {
+                    marginTop: '-9px',
+                    fontFamily: 'IBMPlexSansKR-Light',
+                  }
+                : { display: 'none' }
+            }
+          >
             내용과 D-day 를 모두 입력해주세요.
           </Warning>
         </AddContainer>

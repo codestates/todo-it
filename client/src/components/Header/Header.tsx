@@ -36,13 +36,13 @@ const Username = styled.button`
   //box-shadow: 2px 2px 5px #b8b8b8, -2px -2px 5px #ffffff;
 `;
 
-const Teambtn = styled.button`
-  all: unset;
-  height: 70%;
-  width: 40px;
-  padding: 3px;
-  box-shadow: 2px 2px 5px #b8b8b8, -2px -2px 5px #ffffff;
-`;
+// const Teambtn = styled.button`
+//   all: unset;
+//   height: 70%;
+//   width: 40px;
+//   padding: 3px;
+//   box-shadow: 2px 2px 5px #b8b8b8, -2px -2px 5px #ffffff;
+// `;
 
 const BtnContainer = styled.div`
   margin-top: 5px;
@@ -60,12 +60,12 @@ interface Iprops {
 function Header({ LogoutHandler }: Iprops) {
   const username = 'user';
 
-  const [teamModal, setTeamModal] = useState<boolean>(false);
+  //const [teamModal, setTeamModal] = useState<boolean>(false);
   const [userModal, setUserModal] = useState<boolean>(false);
 
-  function TeamOpen() {
-    setTeamModal(!teamModal);
-  }
+  // function TeamOpen() {
+  //   setTeamModal(!teamModal);
+  // }
   function UserOpen() {
     setUserModal(!userModal);
   }
@@ -85,7 +85,7 @@ function Header({ LogoutHandler }: Iprops) {
       <Container
         onClick={() => {
           setUserModal(false);
-          setTeamModal(false);
+          // setTeamModal(false);
         }}
       >
         <NavLink to="/">
