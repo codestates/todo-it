@@ -6,9 +6,9 @@ import {
   ForbiddenException,
 } from '@nestjs/common';
 import { UserRegisterDto } from '../dto/user-register.dto';
-import { generateRandomNickname } from 'src/common/utils/generateRandomNickname';
-import { User } from '../entities/user.entity';
-import { Todo } from 'src/todos/entities/todo.entity';
+import { generateRandomNickname } from 'src/common/utils/gen-random-nick.util';
+import { pickTodoData } from 'src/common/utils/pick-todo-data.util';
+import { pickUserData } from 'src/common/utils/pick-user-data.util';
 
 @Injectable()
 export class UsersService {
@@ -31,12 +31,12 @@ export class UsersService {
       password,
       nickname,
     });
-    return this.pickUserData(newUser);
+    return pickUserData(newUser);
   }
 
   async getUserById(userId: number) {
     const user = await this.userRepository.findOneOrFail(userId);
-    return this.pickUserData(user);
+    return pickUserData(user);
   }
 
   async updateUserById(
@@ -53,7 +53,7 @@ export class UsersService {
     if (nickname !== undefined) {
       user.nickname = nickname;
     }
-    return this.pickUserData(await user.save());
+    return pickUserData(await user.save());
   }
 
   async deleteUserById(userId: number) {
@@ -65,7 +65,7 @@ export class UsersService {
     const user = await this.userRepository.findOneOrFail(userId, {
       relations: ['todos'],
     });
-    return user.todos.map(this.pickTodoData);
+    return user.todos.map(pickTodoData);
   }
 
   private async generateNoDuplicateNickname(): Promise<string> {
@@ -74,23 +74,5 @@ export class UsersService {
       nickname = generateRandomNickname();
     } while (await this.userRepository.exists({ nickname }));
     return nickname;
-  }
-
-  private pickUserData(user: User) {
-    return {
-      id: user.id,
-      email: user.email,
-      nickname: user.nickname,
-    };
-  }
-
-  private pickTodoData(todo: Todo) {
-    return {
-      id: todo.id,
-      content: todo.content,
-      isDone: todo.isDone,
-      deadline: todo.deadline,
-      comment: todo.comment,
-    };
   }
 }
