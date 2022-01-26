@@ -18,6 +18,9 @@ export class Todo extends CommonEntity {
   @Column({ type: 'varchar', nullable: true })
   comment: string | null;
 
-  @ManyToOne(() => User, (user) => user.todos, { nullable: false })
+  @ManyToOne(() => User, (user) => user.todos, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
   user: User;
 }
