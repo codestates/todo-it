@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import '../../fonts/font.css';
 const Container = styled.div`
-  &:focus {
-    background-color: red;
+  &:hover {
+    > div > div.btn {
+      color: black;
+    }
   }
   display: inline-flex;
   flex-flow: row wrap;
@@ -26,10 +28,7 @@ const Name = styled.div`
 `;
 
 const DirectoryBtn = styled.div`
-  &:hover {
-    color: black;
-  }
-
+  cursor: pointer;
   min-width: 50px;
   line-height: 70px;
   color: rgba(0, 0, 0, 0);
@@ -52,6 +51,7 @@ const Delete = styled.div`
   font-family: 'IBMPlexSansKR-Light';
   font-size: 14px;
   width: 100%;
+  cursor: pointer;
 `;
 
 const Edit = styled.div`
@@ -61,6 +61,7 @@ const Edit = styled.div`
   font-family: 'IBMPlexSansKR-Light';
   font-size: 14px;
   width: 100%;
+  cursor: pointer;
 `;
 
 const EditDelteBtnContainer = styled.div`
@@ -152,6 +153,9 @@ function Directory({
     }
     setEdit(false);
     //let directories = [...Directories];
+    if (newName.length === 0) {
+      return;
+    }
     let newDirectoryList = directories.slice();
     for (let i = 0; i < directories.length; i++) {
       if (directories[i].directory === name) {
@@ -197,11 +201,24 @@ function Directory({
 
   return (
     <div>
-      <Container color={clickDirectory === name ? '#a8c4a6' : '#f7f7f7'}>
+      <Container
+        onMouseLeave={() => {
+          setClick(false);
+          setEdit(false);
+          setDel(false);
+        }}
+        color={clickDirectory === name ? '#a8c4a6' : '#f7f7f7'}
+      >
         <Name>{name}</Name>
-
         {click ? (
-          <Modal>
+          <Modal
+            onClick={(e) => e.stopPropagation()}
+            onMouseLeave={() => {
+              setClick(false);
+              setEdit(false);
+              setDel(false);
+            }}
+          >
             {edit || del ? null : (
               <EditDelteBtnContainer>
                 <Edit onClick={EditClick}>수정하기</Edit>
@@ -229,7 +246,9 @@ function Directory({
 
         {name === 'Today' || name === 'All' ? null : (
           <div onClick={(e) => e.stopPropagation()}>
-            <DirectoryBtn onClick={DirectoryRightBtnClick}>...</DirectoryBtn>
+            <DirectoryBtn className="btn" onMouseOver={DirectoryRightBtnClick}>
+              ...
+            </DirectoryBtn>
           </div>
         )}
       </Container>

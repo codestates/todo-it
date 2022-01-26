@@ -33,7 +33,7 @@ interface Props {
 }
 
 function MainPage({ userId }: Props) {
-  const [clickDirectory, setClickDirectory] = useState('');
+  const [clickDirectory, setClickDirectory] = useState('All');
 
   interface todoListType {
     content: string;
