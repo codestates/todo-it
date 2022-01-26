@@ -53,6 +53,12 @@ export const LoginPage = ({ LoginHandler }: Iprops) => {
       });
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      LoginClickHandler();
+    }
+  };
+
   return (
     <LoginContainer>
       <Body style={{ marginTop: '30vh' }}>
@@ -74,6 +80,7 @@ export const LoginPage = ({ LoginHandler }: Iprops) => {
               type="password"
               value={password}
               onChange={PasswordHandler}
+              onKeyUp={handleKeyPress}
             />
             <Warning style={isRight ? { display: 'none' } : {}}>
               잘못된 이메일 혹은 비밀번호 입니다.
@@ -81,7 +88,7 @@ export const LoginPage = ({ LoginHandler }: Iprops) => {
           </InputBox>
         </StyledDiv>
         <ButtonBox>
-          <StyledButton>비밀번호 찾기</StyledButton>
+          {/* <StyledButton>비밀번호 찾기</StyledButton> */}
           <NavLink to="/signup">
             <StyledButton>회원가입</StyledButton>
           </NavLink>

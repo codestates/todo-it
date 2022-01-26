@@ -30,7 +30,6 @@ export const Profile = () => {
 
   return (
     <UserSettingPageContainer>
-      {isLogin ? <UserLoginModal LoginModalHandler={LoginModalHandler} /> : ''}
       {isWithdrawal ? (
         <WithdrawalModal WithdrawalModalHandler={WithdrawalModalHandler} />
       ) : (
@@ -50,7 +49,6 @@ export const Profile = () => {
           </KeyInput>
         </StyledDiv>
         <ButtonBox>
-          <StyledButton>팀 관리</StyledButton>
           <NavLink to="/userinfosetting">
             <StyledButton onClick={LoginModalHandler}>
               회원정보수정

@@ -168,7 +168,7 @@ export const SignupPage = () => {
               value={email}
               onChange={EmailHandler}
             />
-            <VerifyButton>인증하기</VerifyButton>
+            {/* <VerifyButton>인증하기</VerifyButton> */}
             <Warning style={isEmail ? { display: 'none' } : {}}>
               이메일 형식으로 입력해주세요.
             </Warning>
