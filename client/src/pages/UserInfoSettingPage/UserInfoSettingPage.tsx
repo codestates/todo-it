@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import {
   Body,
   StyledDiv,
@@ -10,9 +11,14 @@ import {
   ButtonBox,
   StyledButton,
 } from '../SignupPage/SignupPage';
-import axios from 'axios';
 
-const UserInfoSettingPageContainer = styled.div``;
+
+const UserInfoSettingPageContainer = styled.div`
+  display: flex;
+`;
+
+
+
 
 export const UserInfoSettingPage = () => {
   const [name, setName] = useState('');
@@ -21,8 +27,8 @@ export const UserInfoSettingPage = () => {
   const [isPass, setIsPass] = useState(true);
   const [checkPass, setCheckPass] = useState('');
   const [isCheck, setIsCheck] = useState(true);
-
   const [originPassword, setOriginPassword] = useState('');
+
 
   const NameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -36,8 +42,11 @@ export const UserInfoSettingPage = () => {
     }
   };
 
+
+
   const PasswordHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewPassword(event.target.value);
+
     const CheckPass = (password: string): boolean => {
       return (
         /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,128}$/.test(
@@ -54,12 +63,15 @@ export const UserInfoSettingPage = () => {
 
   const CheckPassHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCheckPass(event.target.value);
+
     if (newpassword === event.target.value || event.target.value.length === 0) {
+
       setIsCheck(true);
     } else {
       setIsCheck(false);
     }
   };
+
 
   const OriginPassHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setOriginPassword(event.target.value);
@@ -86,6 +98,7 @@ export const UserInfoSettingPage = () => {
       .catch((err) => {
         console.log(err);
       });
+
   };
 
   return (
@@ -116,6 +129,7 @@ export const UserInfoSettingPage = () => {
           >
             user.email
           </KeyInput>
+
         </StyledDiv>
         <StyledDiv>
           <KeyInput>기존 비밀번호 :</KeyInput>
@@ -126,12 +140,14 @@ export const UserInfoSettingPage = () => {
               onChange={OriginPassHandler}
             />
           </InputBox>
+
         </StyledDiv>
         <StyledDiv>
           <KeyInput>비밀번호 :</KeyInput>
           <InputBox>
             <ValueInput
               type="password"
+
               value={newpassword}
               onChange={PasswordHandler}
             />

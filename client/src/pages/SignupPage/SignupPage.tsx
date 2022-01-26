@@ -2,10 +2,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
-const SignupContainer = styled.div``;
+const SignupContainer = styled.div`
+  display: flex;
+`;
 
 export const Body = styled.div`
-  margin: 15vh 0 0 0;
+  margin: 15vh 15vh 15vh 15vh;
+  height: 100%;
+  width: 100%;
 `;
 
 export const StyledDiv = styled.div`
@@ -16,6 +20,8 @@ export const StyledDiv = styled.div`
 `;
 
 export const KeyInput = styled.div`
+  font-family: 'EliceDigitalBaeum_Bold';
+  font-size: 18px;
   padding-left: 160px;
   width: 200px;
   display: flex;
@@ -29,8 +35,14 @@ export const InputBox = styled.div`
 `;
 
 export const ValueInput = styled.input`
+  font-family: 'EliceDigitalBaeum_Bold';
+  border: none;
+  box-shadow: -2px -2px 4px #f8f8f8, 3px 3px 6px rgb(184, 184, 184);
+  border-radius: 13px;
+  font-size: 17px;
   height: 40px;
-  width: 200px;
+  width: 230px;
+  padding: 5px;
 `;
 
 // const VerifyButton = styled.button`
@@ -45,22 +57,27 @@ export const Warning = styled.div`
 
 export const ButtonBox = styled.div`
   display: flex;
-  justify-content: right;
-  margin-right: 30vw;
+  justify-content: center;
 `;
 
 export const StyledButton = styled.div`
+  &:hover {
+    background: #789278;
+  }
+  font-family: 'Y_Spotlight';
+  box-shadow: 3px 3px 6px rgb(184, 184, 184);
+  border: none;
   margin-top: 10vh;
   display: flex;
   justify-content: center;
-  background: red;
+  background: #708870;
   width: 100px;
   height: 50px;
   align-items: center;
   cursor: pointer;
   border-radius: 5px;
   margin-left: 10px;
-  color: black;
+  color: white;
 `;
 
 export const SignupPage = () => {
