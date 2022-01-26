@@ -6,4 +6,5 @@ export const pickTodoData = (todo: Todo) => ({
   isDone: todo.isDone,
   comment: todo.comment,
   deadline: todo.deadline,
+  directoryId: todo.directory === null ? null : todo.directory.id,
 });

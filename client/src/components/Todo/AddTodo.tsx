@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
 export const AddContainer = styled.div`
   background-color: #ececec;
@@ -79,29 +80,30 @@ const Warning = styled.div`
   color: #b80000;
 `;
 
-interface todoListType {
-  content: string;
-  directory: string;
-  Dday: string;
-  comment: string;
+interface Todo {
+  id?: number;
+  content?: string;
+  isDone?: boolean;
+  comment?: string;
+  deadline?: string;
 }
 
 interface DirectoryListType {
-  directoryId: number;
-  directory: string;
+  id: number;
+  name: string;
 }
 
 interface Props {
   directories: DirectoryListType[];
-  todoList: todoListType[];
-  setTodoList(arr: todoListType[]): void;
+  todoList: Todo[];
+  setTodoList(arr: Todo[]): void;
 }
 
 function AddTodo({ directories, todoList, setTodoList }: Props) {
   const [addBtnClick, setAddBtnClick] = useState(false);
   const [name, setName] = useState('');
   const [calendarValue, setCalendarValue] = useState('');
-  const [selectDirectory, setSelectDirectory] = useState('');
+  const [selectDirectory, setSelectDirectory] = useState(-1);
   const [isEmpty, setIsEmpty] = useState(false);
   const AddBtnFunc = () => {
     setAddBtnClick(!addBtnClick);
@@ -115,7 +117,7 @@ function AddTodo({ directories, todoList, setTodoList }: Props) {
     //console.log(name, selectDirectory, calendarValue, selectDirectory);
     if (
       name.length === 0 ||
-      selectDirectory.length === 0 ||
+      selectDirectory === -1 ||
       calendarValue.length === 0
     ) {
       setIsEmpty(true);
@@ -129,7 +131,7 @@ function AddTodo({ directories, todoList, setTodoList }: Props) {
       comment: '',
     };
     setTodoList([...todoList, todoObj]);
-    setSelectDirectory('');
+    setSelectDirectory(-1);
     setCalendarValue('');
     setName('');
     setAddBtnClick(false);
@@ -142,12 +144,27 @@ function AddTodo({ directories, todoList, setTodoList }: Props) {
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
-    setSelectDirectory(value);
+    setSelectDirectory(+value);
   };
 
   const dateSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setCalendarValue(value);
+  };
+
+  const AddDirectory = () => {
+    axios.post(
+      'https://localhost:8000/users/me/todos',
+      {
+        content: name,
+        deadline: calendarValue,
+        directoryId: selectDirectory,
+      },
+      {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      }
+    );
   };
 
   return (
@@ -167,11 +184,11 @@ function AddTodo({ directories, todoList, setTodoList }: Props) {
               }}
               onChange={handleSelect}
             >
-              {[{ directory: 'Directory' }, ...directories].map(
+              {[{ name: 'Directory', id: -1 }, ...directories].map(
                 (obj, index) => {
                   return (
-                    <option key={index} value={obj.directory}>
-                      {obj.directory}
+                    <option key={index} value={obj.id}>
+                      {obj.name}
                     </option>
                   );
                 }

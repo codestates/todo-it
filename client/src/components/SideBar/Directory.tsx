@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import '../../fonts/font.css';
+<<<<<<< css
 import { AiOutlineLeft } from 'react-icons/ai';
+=======
+import axios from 'axios';
+>>>>>>> dev
 const Container = styled.div`
   &:hover {
     > div > div.btn {
@@ -111,23 +115,18 @@ export const DelBtn = styled.div`
 `;
 
 interface DirectoryListType {
-  directoryId: number;
-  directory: string;
+  id: number;
+  name: string;
 }
 
 interface Props {
-  name: string;
+  id: number;
   directories: DirectoryListType[];
-  clickDirectory: string;
-  setDirectories(arr: DirectoryListType[]): void;
+  clickDirectory: number;
+  name: string;
 }
 
-function Directory({
-  name,
-  clickDirectory,
-  directories,
-  setDirectories,
-}: Props) {
+function Directory({ id, clickDirectory, directories, name }: Props) {
   const [click, setClick] = useState(false);
   const [edit, setEdit] = useState(false);
   const [del, setDel] = useState(false);
@@ -152,45 +151,35 @@ function Directory({
     if (newName.length === 0) {
       return;
     }
-    setEdit(false);
-    //let directories = [...Directories];
-    if (newName.length === 0) {
-      return;
-    }
-    let newDirectoryList = directories.slice();
-    for (let i = 0; i < directories.length; i++) {
-      if (directories[i].directory === name) {
-        newDirectoryList = [
-          ...directories.slice(undefined, i),
-          ...[{ directoryId: i, directory: newName }],
-          ...directories.slice(i + 1),
-        ];
-        // directories = directories.slice(0, i).concat([newName]);
-        // directories.concat(directories.slice(i + 1));
-        break;
-      }
-      setnewName('');
-    }
-    // directories.map((directoryname, index) => {
-    //   return directoryname === name ? (directoryname = newName) : true;
-    // });
-    setDirectories(newDirectoryList);
-    setClick(false);
+    axios
+      .patch(
+        `https://localhost:8000/users/me/directories/${id}`,
+        { name: newName },
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        setDel(false);
+        setClick(false);
+        window.location.href = 'https://localhost:3000/';
+      })
+      .catch((e) => console.log(e));
   };
 
   const DelBtnFunc = () => {
-    setDel(false);
-    let newDirectoryList = directories.slice();
-    for (let i = 0; i < directories.length; i++) {
-      if (directories[i].directory === name) {
-        newDirectoryList = directories
-          .slice(undefined, i)
-          .concat(directories.slice(i + 1));
-        break;
-      }
-    }
-    setDirectories(newDirectoryList);
-    setClick(false);
+    axios
+      .delete(`https://localhost:8000/users/me/directories/${id}`, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      })
+      .then((res) => {
+        setDel(false);
+        setClick(false);
+        window.location.href = 'https://localhost:3000/';
+      })
+      .catch((e) => console.log(e));
   };
   const CancelEditBtnFunc = () => {
     setEdit(false);
@@ -208,7 +197,7 @@ function Directory({
           setEdit(false);
           setDel(false);
         }}
-        color={clickDirectory === name ? '#a8c4a6' : '#f7f7f7'}
+        color={clickDirectory === id ? '#a8c4a6' : '#f7f7f7'}
       >
         <Name>{name}</Name>
         {click ? (
@@ -245,7 +234,7 @@ function Directory({
           </Modal>
         ) : null}
 
-        {name === 'Today' || name === 'All' ? null : (
+        {id === -3 || id === -2 ? null : (
           <div onClick={(e) => e.stopPropagation()}>
             <DirectoryBtn className="btn" onMouseOver={DirectoryRightBtnClick}>
               <AiOutlineLeft />
