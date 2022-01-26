@@ -15,17 +15,16 @@ import { CurrentUser } from 'src/common/decorators/current-user.decorator';
 import { JwtValidatePayload } from 'src/auth/jwt/jwt-validate.payload';
 
 @Controller('users/me')
+@UseGuards(JwtAuthGuard)
 export class UsersMeController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  @UseGuards(JwtAuthGuard)
   getMe(@CurrentUser() { userId }: JwtValidatePayload) {
     return this.usersService.getUserById(userId);
   }
 
   @Patch()
-  @UseGuards(JwtAuthGuard)
   updateMe(
     @CurrentUser() { userId }: JwtValidatePayload,
     @Body() userUpdateDto: UserUpdateDto
@@ -35,14 +34,7 @@ export class UsersMeController {
 
   @Delete()
   @HttpCode(HttpStatus.NO_CONTENT)
-  @UseGuards(JwtAuthGuard)
   async deleteMe(@CurrentUser() { userId }: JwtValidatePayload) {
     await this.usersService.deleteUserById(userId);
-  }
-
-  @Get('todos')
-  @UseGuards()
-  getMyTodos(@CurrentUser() { userId }: JwtValidatePayload) {
-    return this.usersService.getUserTodos(userId);
   }
 }
