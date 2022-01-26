@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import '../../fonts/font.css';
+
+const AddListContainer = styled.div`
+  background-color: #708870;
+  height: 10vh;
+  align-items: center;
+  position: relative;
+  display: flex;
+  justify-content: center;
+`;
+
 const AddBtn = styled.div`
   &:hover {
     color: #202020;
   }
+  font-family: 'EliceDigitalBaeum_Bold';
   color: gray;
   background-color: #eeeeee;
   height: 10vh;
@@ -14,15 +25,6 @@ const AddBtn = styled.div`
   display: flex;
   justify-content: center;
   font-size: 20px;
-`;
-
-const AddListContainer = styled.div`
-  background-color: #708870;
-  height: 10vh;
-  align-items: center;
-  position: relative;
-  display: flex;
-  justify-content: center;
 `;
 
 const NameInput = styled.input`
@@ -41,9 +43,10 @@ const SubmitBtn = styled.div`
     color: #202020;
   }
   all: unset;
+  font-family: 'EliceDigitalBaeum_Bold';
   color: #ffffff;
-  font-size: 30px;
-  padding: 10px;
+  font-size: 12px;
+  padding: 5px;
 `;
 
 interface DirectoryListType {
@@ -77,6 +80,10 @@ function AddDirectory({ Directories, setDirectories }: Props) {
     setClick(false);
   };
 
+  const Cancel = () => {
+    setClick(false);
+  };
+
   return (
     <div>
       {!click ? (
@@ -84,7 +91,8 @@ function AddDirectory({ Directories, setDirectories }: Props) {
       ) : (
         <AddListContainer>
           <NameInput onChange={onChange} value={directoryName} />
-          <SubmitBtn onClick={AddDirectory}>+</SubmitBtn>
+          <SubmitBtn onClick={AddDirectory}>추가</SubmitBtn>
+          <SubmitBtn onClick={Cancel}>취소</SubmitBtn>
         </AddListContainer>
       )}
     </div>
