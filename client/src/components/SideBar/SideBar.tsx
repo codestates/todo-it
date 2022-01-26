@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import AddDirectory from './AddDirectory';
 import Directory from './Directory';
 import '../../fonts/font.css';
+
 const Sidebar = styled.div`
   float: left;
   width: 30%;
@@ -22,16 +23,15 @@ const DirectoriyContainer = styled.div`
 `;
 
 interface DirectoryListType {
-  directoryId: number;
-  directory: string;
+  id: number;
+  name: string;
 }
 
 interface Props {
   userId?: number;
   directories: DirectoryListType[];
-  setDirectories(arr: DirectoryListType[]): void;
-  clickDirectory: string;
-  DirectoryClicked(value: string): void;
+  clickDirectory: number;
+  DirectoryClicked(value: number): void;
 }
 
 function SideBar({
@@ -39,47 +39,24 @@ function SideBar({
   clickDirectory,
   DirectoryClicked,
   directories,
-  setDirectories,
 }: Props) {
   // const [rightBtnclick, setRightBtnClick] = useState(false);
 
   return (
     <Sidebar>
       <DirectoriyContainer>
-        <div
-          style={{ marginTop: '5px' }}
-          onClick={() => DirectoryClicked('All')}
-        >
-          <Directory
-            name="All"
-            clickDirectory={clickDirectory}
-            directories={directories}
-            setDirectories={setDirectories}
-          />
-        </div>
-        <div onClick={() => DirectoryClicked('Today')}>
-          <Directory
-            name="Today"
-            clickDirectory={clickDirectory}
-            directories={directories}
-            setDirectories={setDirectories}
-          ></Directory>
-        </div>
         {directories.map((obj, index) => (
-          <div key={index} onClick={() => DirectoryClicked(`${obj.directory}`)}>
+          <div key={index} onClick={() => DirectoryClicked(obj.id)}>
             <Directory
               clickDirectory={clickDirectory}
-              name={obj.directory}
+              id={obj.id}
               directories={directories}
-              setDirectories={setDirectories}
+              name={obj.name}
             />
           </div>
         ))}
       </DirectoriyContainer>
-      <AddDirectory
-        Directories={directories}
-        setDirectories={(arr: DirectoryListType[]) => setDirectories(arr)}
-      />
+      <AddDirectory />
     </Sidebar>
   );
 }

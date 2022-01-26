@@ -33,14 +33,7 @@ interface Props {
 }
 
 function MainPage({ userId }: Props) {
-  const [clickDirectory, setClickDirectory] = useState('All');
-
-  interface todoListType {
-    content: string;
-    directory: string;
-    Dday: string;
-    comment: string;
-  }
+  const [clickDirectory, setClickDirectory] = useState(-2);
 
   interface Todo {
     id?: number;
@@ -48,44 +41,19 @@ function MainPage({ userId }: Props) {
     isDone?: boolean;
     comment?: string;
     deadline?: string;
+    directoryId?: number;
   }
 
-  //dummyData
-  const [todoList, setTodoList] = useState<todoListType[]>([
-    { content: '책읽기', directory: '공부', Dday: '2022-01-31', comment: '' },
-    { content: '운동하기', directory: '관리', Dday: '2022-01-29', comment: '' },
-    {
-      content: 'todo-it',
-      directory: '개발',
-      Dday: '2022-04-11',
-      comment: 'MainPage 구현',
-    },
-    {
-      content: '과제 제출',
-      directory: '공부',
-      Dday: '2022-02-04',
-      comment: '',
-    },
-    { content: '팩하기', directory: '관리', Dday: '2022-01-25', comment: '' },
-    {
-      content: '파이썬공부',
-      directory: '공부',
-      Dday: '2022-01-25',
-      comment: '조건문, 반복문',
-    },
-  ]);
-
-  const [todo, setTodo] = useState<Todo>({});
+  const [todo, setTodo] = useState<Todo[]>([]);
 
   interface DirectoryListType {
-    directoryId: number;
-    directory: string;
+    id: number;
+    name: string;
   }
   //dummyData
   const [directories, setDirectories] = useState<DirectoryListType[]>([
-    { directoryId: 0, directory: '공부' },
-    { directoryId: 1, directory: '관리' },
-    { directoryId: 2, directory: '개발' },
+    { id: -2, name: 'All' },
+    { id: -3, name: 'Today' },
   ]);
 
   useEffect(() => {
@@ -96,12 +64,23 @@ function MainPage({ userId }: Props) {
       })
       .then((res) => {
         setTodo(res.data);
-        console.log(todo);
+        // console.log(todo);
+      })
+      .catch((e) => console.log(e));
+
+    axios
+      .get('https://localhost:8000/users/me/directories', {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      })
+      .then((res) => {
+        setDirectories([...directories, ...res.data]);
+        console.log(res.data);
       })
       .catch((e) => console.log(e));
   }, []);
 
-  const DirectoryClicked = (value: string) => {
+  const DirectoryClicked = (value: number) => {
     setClickDirectory(value);
   };
 
@@ -122,61 +101,60 @@ function MainPage({ userId }: Props) {
         clickDirectory={clickDirectory}
         DirectoryClicked={DirectoryClicked}
         directories={directories}
-        setDirectories={setDirectories}
       />
       <TodosContainer>
         <AddTodo
           directories={directories}
-          todoList={todoList}
-          setTodoList={setTodoList}
+          todoList={todo}
+          setTodoList={setTodo}
         />
         <TodoScrollContainer>
-          {clickDirectory === '' || clickDirectory === 'All'
-            ? todoList.map((obj, index) => {
+          {clickDirectory === -1 || clickDirectory === -2
+            ? todo.map((obj, index) => {
                 return (
                   <Todo
                     key={index}
                     index={index}
-                    todoList={todoList}
-                    setTodoList={setTodoList}
+                    todoList={todo}
+                    setTodoList={setTodo}
                     content={obj.content}
-                    directory={obj.directory}
-                    Dday={obj.Dday}
+                    directoryId={obj.directoryId}
+                    Dday={obj.deadline}
                     directories={directories}
                     comment={obj.comment}
                   />
                 );
               })
-            : clickDirectory === 'Today'
-            ? todoList
-                .filter((todoObj) => todoObj.Dday === today)
+            : clickDirectory === -3
+            ? todo
+                .filter((todoObj) => todoObj.deadline === today)
                 .map((obj, index) => {
                   return (
                     <Todo
                       key={index}
                       index={index}
-                      todoList={todoList}
-                      setTodoList={setTodoList}
+                      todoList={todo}
+                      setTodoList={setTodo}
                       content={obj.content}
-                      directory={obj.directory}
-                      Dday={obj.Dday}
+                      directoryId={obj.directoryId}
+                      Dday={obj.deadline}
                       directories={directories}
                       comment={obj.comment}
                     />
                   );
                 })
-            : todoList
-                .filter((todoObj) => todoObj.directory === clickDirectory)
+            : todo
+                .filter((todoObj) => todoObj.directoryId === clickDirectory)
                 .map((obj, index) => {
                   return (
                     <Todo
                       key={index}
                       index={index}
-                      todoList={todoList}
-                      setTodoList={setTodoList}
+                      todoList={todo}
+                      setTodoList={setTodo}
                       content={obj.content}
-                      directory={obj.directory}
-                      Dday={obj.Dday}
+                      directoryId={obj.directoryId}
+                      Dday={obj.deadline}
                       directories={directories}
                       comment={obj.comment}
                     />
