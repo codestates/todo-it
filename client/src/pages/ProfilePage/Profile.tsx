@@ -16,7 +16,15 @@ const Body = styled.div`
   margin-top: 30vh;
 `;
 
-export const Profile = () => {
+interface Iprops {
+  userInfo: {
+    id?: number;
+    nickname?: string;
+    email?: string;
+  };
+}
+
+export const Profile = ({ userInfo }: Iprops) => {
   const [isLogin, setIsLogin] = useState(false);
   const [isWithdrawal, setIsWithdrawal] = useState(false);
 
@@ -39,14 +47,12 @@ export const Profile = () => {
         <StyledDiv>
           <KeyInput>닉네임 :</KeyInput>
           <KeyInput style={{ paddingLeft: '0px' }}>
-            MYMY{/* 요청 데이터 */}
+            {userInfo.nickname}
           </KeyInput>
         </StyledDiv>
         <StyledDiv>
           <KeyInput>이메일 :</KeyInput>
-          <KeyInput style={{ paddingLeft: '0px' }}>
-            alsqha2626@gmail.com{/* 요청 데이터 */}
-          </KeyInput>
+          <KeyInput style={{ paddingLeft: '0px' }}>{userInfo.email}</KeyInput>
         </StyledDiv>
         <ButtonBox>
           <NavLink to="/userinfosetting">
