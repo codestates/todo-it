@@ -15,10 +15,11 @@ export class TodosService {
     private readonly userRepository: UserRepository
   ) {}
 
-  async addTodoByUserId(userId: number, { content }: UserTodoAddDto) {
+  async addTodoByUserId(userId: number, { content, deadline }: UserTodoAddDto) {
     return pickTodoData(
       await this.todoRepository.save({
         content,
+        deadline,
         user: await this.userRepository.findOneOrFail(userId),
       })
     );
