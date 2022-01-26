@@ -9,6 +9,7 @@ export class EntityNotFoundErrorFilter
   private readonly errorMessages: Record<string, string> = {
     User: '존재하지 않는 유저입니다.',
     Todo: '존재하지 않는 Todo입니다.',
+    Directory: '존재하지 않는 Directory입니다.',
   };
 
   catch(exception: EntityNotFoundError, host: ArgumentsHost) {
