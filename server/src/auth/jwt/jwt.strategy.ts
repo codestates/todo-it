@@ -1,3 +1,4 @@
+import { JwtValidatePayload } from './jwt-validate.payload';
 import { ConfigService } from '@nestjs/config';
 import { JwtPayload } from './jwt.payload';
 import { PassportStrategy } from '@nestjs/passport';
@@ -17,7 +18,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  validate(payload: JwtPayload) {
-    return { id: payload.sub, email: payload.email };
+  validate(payload: JwtPayload): JwtValidatePayload {
+    return { userId: payload.sub, email: payload.email };
   }
 }

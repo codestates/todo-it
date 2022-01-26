@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import '../../fonts/font.css';
 // import MainPage from '../../pages/MainPage/MainPage';
 import logo from './header_logo.png';
 import TeamModal from './Modal/TeamModal';
@@ -29,7 +30,11 @@ const Username = styled.button`
   height: 70%;
   width: auto;
   padding: 3px;
-  box-shadow: 2px 2px 5px #b8b8b8, -2px -2px 5px #ffffff;
+  font-size: 20px;
+  color: black;
+  font-family: 'Vitro_core';
+
+  //box-shadow: 2px 2px 5px #b8b8b8, -2px -2px 5px #ffffff;
 `;
 
 const Teambtn = styled.button`

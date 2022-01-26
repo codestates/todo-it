@@ -1,5 +1,5 @@
 import { Todo } from '../../todos/entities/todo.entity';
-import { IsBoolean, IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { CommonEntity } from 'src/common/entities/common.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
 
@@ -20,10 +20,6 @@ export class User extends CommonEntity {
   @Column({ type: 'varchar', unique: true, nullable: false })
   nickname: string;
 
-  @IsBoolean()
-  @Column({ type: 'boolean', nullable: false, default: false })
-  isEmailVerified: boolean;
-
-  @OneToMany(() => Todo, (todo) => todo.user)
+  @OneToMany(() => Todo, (todo) => todo.user, { cascade: true })
   todos: Todo[];
 }

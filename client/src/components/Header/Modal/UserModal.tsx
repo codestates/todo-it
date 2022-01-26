@@ -1,4 +1,6 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+import '../../../fonts/font.css';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
@@ -14,9 +16,12 @@ const ModalContent = styled.div`
   width: 20rem;
   height: 10rem;
   display: flex;
+  border-radius: 20px;
   flex-direction: column;
-  justify-content: space-between;
+
+  justify-content: space-around;
   background-color: #fff;
+  box-shadow: 2px 2px 5px #b8b8b8, -1px -1px 3px #b8b8b8;
 `;
 
 const Overlay = styled.div`
@@ -28,7 +33,13 @@ const Overlay = styled.div`
   left: 0;
 `;
 const Btn = styled.div`
-  margin: 5px;
+  &:hover {
+    font-weight: bold;
+    color: #3c553c;
+    font-size: 18px;
+  }
+  font-family: 'Y_Spotlight';
+  font-weight: normal;
   text-align: center;
   color: black;
 `;
@@ -39,7 +50,9 @@ interface Props {
   LogoutHandler: () => void;
 }
 
+
 function UserModal({ userModal, setUserModal, LogoutHandler }: Props) {
+
   const onClick = () => {
     setUserModal(!userModal);
   };
