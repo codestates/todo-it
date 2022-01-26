@@ -12,15 +12,19 @@ import {
   StyledButton,
 } from '../SignupPage/SignupPage';
 
-
 const UserInfoSettingPageContainer = styled.div`
   display: flex;
 `;
 
+interface Iprops {
+  userInfo: {
+    id?: number;
+    nickname?: string;
+    email?: string;
+  };
+}
 
-
-
-export const UserInfoSettingPage = () => {
+export const UserInfoSettingPage = ({ userInfo }: Iprops) => {
   const [name, setName] = useState('');
   const [isName, setIsName] = useState(true);
   const [newpassword, setNewPassword] = useState('');
@@ -28,7 +32,6 @@ export const UserInfoSettingPage = () => {
   const [checkPass, setCheckPass] = useState('');
   const [isCheck, setIsCheck] = useState(true);
   const [originPassword, setOriginPassword] = useState('');
-
 
   const NameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -41,8 +44,6 @@ export const UserInfoSettingPage = () => {
       setIsName(true);
     }
   };
-
-
 
   const PasswordHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewPassword(event.target.value);
@@ -65,13 +66,11 @@ export const UserInfoSettingPage = () => {
     setCheckPass(event.target.value);
 
     if (newpassword === event.target.value || event.target.value.length === 0) {
-
       setIsCheck(true);
     } else {
       setIsCheck(false);
     }
   };
-
 
   const OriginPassHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setOriginPassword(event.target.value);
@@ -98,7 +97,6 @@ export const UserInfoSettingPage = () => {
       .catch((err) => {
         console.log(err);
       });
-
   };
 
   return (
@@ -109,7 +107,7 @@ export const UserInfoSettingPage = () => {
           <InputBox>
             <ValueInput
               type="text"
-              placeholder="user.name"
+              placeholder={userInfo.nickname}
               value={name}
               onChange={NameHandler}
             />
@@ -127,9 +125,8 @@ export const UserInfoSettingPage = () => {
               paddingRight: '160px',
             }}
           >
-            user.email
+            {userInfo.email}
           </KeyInput>
-
         </StyledDiv>
         <StyledDiv>
           <KeyInput>기존 비밀번호 :</KeyInput>
@@ -140,14 +137,12 @@ export const UserInfoSettingPage = () => {
               onChange={OriginPassHandler}
             />
           </InputBox>
-
         </StyledDiv>
         <StyledDiv>
           <KeyInput>비밀번호 :</KeyInput>
           <InputBox>
             <ValueInput
               type="password"
-
               value={newpassword}
               onChange={PasswordHandler}
             />
