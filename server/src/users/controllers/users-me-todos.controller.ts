@@ -34,7 +34,7 @@ export class UsersMeTodosController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  addTodo(
+  addMyTodo(
     @CurrentUser() { userId }: JwtValidatePayload,
     @Body() userTodoAddDto: UserTodoAddDto
   ) {
