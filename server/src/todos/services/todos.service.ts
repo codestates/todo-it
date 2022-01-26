@@ -1,8 +1,8 @@
-import { pickTodoData } from './../../common/utils/pick-todo-data.util';
+import { pickTodoData } from '../../common/utils/pick-todo-data.util';
 import { UserRepository } from '../../users/repositories/user.repository';
 import { UserTodoAddDto } from '../../users/dto/user-todo-add.dto';
 import { Todo } from 'src/todos/entities/todo.entity';
-import { Injectable } from '@nestjs/common';
+import { Injectable, ForbiddenException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -21,5 +21,15 @@ export class TodosService {
         user: await this.userRepository.findOneOrFail(userId),
       })
     );
+  }
+
+  async checkAndDeleteTodoByTodoId(todoId: number, userId: number) {
+    const todo = await this.todoRepository.findOneOrFail(todoId, {
+      relations: ['user'],
+    });
+    if (todo.user.id !== userId) {
+      throw new ForbiddenException('자신의 todo가 아닙니다.');
+    }
+    todo.remove();
   }
 }
