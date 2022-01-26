@@ -41,11 +41,11 @@ export class UsersService {
 
   async updateUserById(
     userId: number,
-    { originalPassword, nickname, newPassword }: UserUpdateDto
+    { oldPassword, nickname, newPassword }: UserUpdateDto
   ) {
     const user = await this.userRepository.findOneOrFail(userId);
-    if (user.password !== originalPassword) {
-      throw new ForbiddenException('originalPassword가 유효하지 않습니다.');
+    if (user.password !== oldPassword) {
+      throw new ForbiddenException('oldPassword가 유효하지 않습니다.');
     }
     if (newPassword !== undefined) {
       user.password = newPassword;
