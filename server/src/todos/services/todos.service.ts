@@ -26,7 +26,7 @@ export class TodosService {
       directoryId === undefined
         ? null
         : await this.directoryRepository.findOneOrFail(directoryId, {
-            relations: ['user'],
+            relations: ['user', 'directory'],
           });
 
     if (directory !== null && directory.user.id !== userId) {
@@ -49,7 +49,7 @@ export class TodosService {
     userId: number
   ) {
     const todo = await this.todoRepository.findOneOrFail(todoId, {
-      relations: ['user'],
+      relations: ['user', 'directory'],
     });
     if (todo.user.id !== userId) {
       throw new ForbiddenException('자신의 Todo가 아닙니다.');

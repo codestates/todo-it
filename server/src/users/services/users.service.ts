@@ -70,8 +70,9 @@ export class UsersService {
 
   async getUserTodos(userId: number) {
     const user = await this.userRepository.findOneOrFail(userId, {
-      relations: ['todos'],
+      relations: ['todos', 'todos.directory'],
     });
+    console.log(user.todos);
     return user.todos.map(pickTodoData);
   }
 
@@ -79,7 +80,7 @@ export class UsersService {
     const directory = await this.directoryRepository.findOneOrFail(
       directoryId,
       {
-        relations: ['user', 'todos'],
+        relations: ['user', 'todos', 'todos.directory'],
       }
     );
     if (directory.user.id !== userId) {
