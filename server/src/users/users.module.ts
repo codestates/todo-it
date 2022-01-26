@@ -1,3 +1,4 @@
+import { Directory } from '../directories/entities/directory.entity';
 import { DirectoriesModule } from '../directories/directories.module';
 import { UsersMeDirectoriesController } from './controllers/users-me-directories.controller';
 import { TodosModule } from '../todos/todos.module';
@@ -11,7 +12,7 @@ import { UsersService } from './services/users.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UserRepository]),
+    TypeOrmModule.forFeature([UserRepository, Directory]),
     TodosModule,
     DirectoriesModule,
   ],

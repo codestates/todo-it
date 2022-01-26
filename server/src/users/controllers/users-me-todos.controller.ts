@@ -1,3 +1,4 @@
+import { TodoFilterDto } from '../dto/todo-filter.dto';
 import { UserTodoUpdateDto } from '../dto/user-todo-update.dto';
 import { TodosService } from '../../todos/services/todos.service';
 import { UserTodoAddDto } from '../dto/user-todo-add.dto';
@@ -14,6 +15,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { JwtValidatePayload } from 'src/auth/jwt/jwt-validate.payload';
@@ -28,8 +30,14 @@ export class UsersMeTodosController {
   ) {}
 
   @Get()
-  getMyTodos(@CurrentUser() { userId }: JwtValidatePayload) {
-    return this.usersService.getUserTodos(userId);
+  getMyTodos(
+    @CurrentUser() { userId }: JwtValidatePayload,
+    @Query() { directoryId }: TodoFilterDto
+  ) {
+    if (directoryId === undefined) {
+      return this.usersService.getUserTodos(userId);
+    }
+    return this.usersService.getUserTodosByDirectoryId(directoryId, userId);
   }
 
   @Post()

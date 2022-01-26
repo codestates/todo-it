@@ -1,3 +1,4 @@
+import { Directory } from '../../directories/entities/directory.entity';
 import { UserUpdateDto } from '../dto/user-update.dto';
 import { UserRepository } from '../repositories/user.repository';
 import {
@@ -9,10 +10,16 @@ import { UserRegisterDto } from '../dto/user-register.dto';
 import { generateRandomNickname } from 'src/common/utils/gen-random-nick.util';
 import { pickTodoData } from 'src/common/utils/pick-todo-data.util';
 import { pickUserData } from 'src/common/utils/pick-user-data.util';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    @InjectRepository(Directory)
+    private readonly directoryRepository: Repository<Directory>
+  ) {}
 
   async registerUser({ email, password, nickname }: UserRegisterDto) {
     if (await this.userRepository.exists({ email })) {
@@ -66,6 +73,19 @@ export class UsersService {
       relations: ['todos'],
     });
     return user.todos.map(pickTodoData);
+  }
+
+  async getUserTodosByDirectoryId(directoryId: number, userId: number) {
+    const directory = await this.directoryRepository.findOneOrFail(
+      directoryId,
+      {
+        relations: ['user', 'todos'],
+      }
+    );
+    if (directory.user.id !== userId) {
+      throw new ForbiddenException('자신의 디렉토리가 아닙니다.');
+    }
+    return directory.todos.map(pickTodoData);
   }
 
   private async generateNoDuplicateNickname(): Promise<string> {

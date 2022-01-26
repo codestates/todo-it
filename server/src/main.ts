@@ -22,7 +22,14 @@ async function bootstrap() {
   // TODO: 배포환경 origin 변경
   app.enableCors({ credentials: true, origin: true });
   app.use(cookieParser());
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+    })
+  );
   app.useGlobalFilters(
     new HttpExceptionFilter(),
     new EntityNotFoundErrorFilter()
