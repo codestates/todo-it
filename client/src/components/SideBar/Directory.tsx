@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import '../../fonts/font.css';
+import { AiOutlineLeft } from 'react-icons/ai';
 const Container = styled.div`
   &:hover {
     > div > div.btn {
@@ -34,7 +35,7 @@ const DirectoryBtn = styled.div`
   color: rgba(0, 0, 0, 0);
 `;
 
-const Modal = styled.div`
+export const Modal = styled.div`
   border-radius: 10px;
   height: 60px;
   width: 50%;
@@ -44,7 +45,7 @@ const Modal = styled.div`
   background-color: #e9e9e9;
 `;
 
-const Delete = styled.div`
+export const Delete = styled.div`
   &:hover {
     font-weight: bold;
   }
@@ -54,7 +55,7 @@ const Delete = styled.div`
   cursor: pointer;
 `;
 
-const Edit = styled.div`
+export const Edit = styled.div`
   &:hover {
     font-weight: bold;
   }
@@ -64,14 +65,14 @@ const Edit = styled.div`
   cursor: pointer;
 `;
 
-const EditDelteBtnContainer = styled.div`
+export const EditDelteBtnContainer = styled.div`
   display: flex;
   flex-flow: column;
   align-content: space-around;
   padding: 10px;
 `;
 
-const EditBox = styled.div`
+export const EditBox = styled.div`
   padding: 10px;
 `;
 
@@ -95,12 +96,12 @@ const EditBtn = styled.div`
   font-family: 'IBMPlexSansKR-Light';
 `;
 
-const DelBox = styled.div`
+export const DelBox = styled.div`
   display: inline-flex;
   padding: 20px;
 `;
 
-const DelBtn = styled.div`
+export const DelBtn = styled.div`
   &:hover {
     font-weight: bold;
   }
@@ -247,7 +248,7 @@ function Directory({
         {name === 'Today' || name === 'All' ? null : (
           <div onClick={(e) => e.stopPropagation()}>
             <DirectoryBtn className="btn" onMouseOver={DirectoryRightBtnClick}>
-              ...
+              <AiOutlineLeft />
             </DirectoryBtn>
           </div>
         )}

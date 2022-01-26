@@ -50,6 +50,7 @@ export const ValueInput = styled.input`
 // `;
 
 export const Warning = styled.div`
+  font-family: 'IBMPlexSansKR-Light';
   font-size: smaller;
   font-weight: bolder;
   color: red;
