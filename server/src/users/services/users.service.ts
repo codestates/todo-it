@@ -1,4 +1,4 @@
-import { UserUpdateDto } from './../dto/user-update.dto';
+import { UserUpdateDto } from '../dto/user-update.dto';
 import { UserRepository } from '../repositories/user.repository';
 import {
   ConflictException,
