@@ -20,10 +20,6 @@ export class User extends CommonEntity {
   @Column({ type: 'varchar', unique: true, nullable: false })
   nickname: string;
 
-  @IsBoolean()
-  @Column({ type: 'boolean', nullable: false, default: false })
-  isEmailVerified: boolean;
-
   @OneToMany(() => Todo, (todo) => todo.user)
   todos: Todo[];
 }

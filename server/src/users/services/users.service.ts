@@ -59,7 +59,6 @@ export class UsersService {
       id: user.id,
       email: user.email,
       nickname: user.nickname,
-      isEmailVerified: user.isEmailVerified,
     };
   }
 
