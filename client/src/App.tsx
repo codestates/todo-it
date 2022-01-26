@@ -1,24 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { SignupPage } from './pages/SignupPage/SignupPage';
 import { LoginPage } from './pages/LoginPage/LoginPage';
-import { TeamMakingPage } from './pages/TeamMakingPage/TeamMakingPage';
 import { Profile } from './pages/ProfilePage/Profile';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { UserInfoSettingPage } from './pages/UserInfoSettingPage/UserInfoSettingPage';
 import Header from './components/Header/Header';
-import { UserTeamSettingPage } from './pages/UserTeamSettingPage/UserTeamSettingPage';
 import MainPage from './pages/MainPage/MainPage';
+import axios from 'axios';
+
+interface UserInfo {
+  id?: number;
+  nickname?: string;
+  email?: string;
+}
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
-  const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState<UserInfo>({});
+  const [accessToken, setAccessToken] = useState('');
 
-  useEffect(() => {});
+  useEffect(() => {
+    axios
+      .get('https://localhost:8000/users/me', {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      })
+      .then((res) => {
+        setUserInfo(res.data);
+        setIsLogin(true);
+      })
+      .catch((err) => console.log(err));
+  }, [isLogin]);
 
-  const LoginHandler = () => {
+  const LoginHandler = (token: string) => {
     setIsLogin(true);
+    setAccessToken(token);
+    console.log(accessToken);
   };
 
   const LogoutHandler = () => {
@@ -27,20 +45,27 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Header LogoutHandler={LogoutHandler}></Header>
+      <Header LogoutHandler={LogoutHandler} userInfo={userInfo}></Header>
       <Routes>
         <Route
           path="/"
           element={
             isLogin ? (
-              <MainPage userId={1}></MainPage>
+              <MainPage userId={userInfo.id}></MainPage>
             ) : (
               <LoginPage LoginHandler={LoginHandler} />
             )
           }
         ></Route>
         <Route path="/signup" element={<SignupPage></SignupPage>} />
-        <Route path="/profile" element={<Profile></Profile>} />
+        <Route
+          path="/profile"
+          element={<Profile userInfo={userInfo}></Profile>}
+        />
+        <Route
+          path="/userinfosetting"
+          element={<UserInfoSettingPage></UserInfoSettingPage>}
+        />
       </Routes>
     </BrowserRouter>
   );

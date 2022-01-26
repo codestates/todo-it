@@ -1,5 +1,7 @@
+import { DirectoriesModule } from '../directories/directories.module';
+import { UsersMeDirectoriesController } from './controllers/users-me-directories.controller';
 import { TodosModule } from '../todos/todos.module';
-import { UserMeTodosController } from './controllers/user-me-todos.controller';
+import { UsersMeTodosController } from './controllers/users-me-todos.controller';
 import { UsersMeController } from './controllers/users-me.controller';
 import { UserRepository } from './repositories/user.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -8,8 +10,17 @@ import { Module } from '@nestjs/common';
 import { UsersService } from './services/users.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserRepository]), TodosModule],
-  controllers: [UsersMeController, UserMeTodosController, UsersController],
+  imports: [
+    TypeOrmModule.forFeature([UserRepository]),
+    TodosModule,
+    DirectoriesModule,
+  ],
+  controllers: [
+    UsersMeController,
+    UsersMeTodosController,
+    UsersMeDirectoriesController,
+    UsersController,
+  ],
   providers: [UsersService],
 })
 export class UsersModule {}

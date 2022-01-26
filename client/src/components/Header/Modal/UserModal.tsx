@@ -47,9 +47,10 @@ interface Props {
   userModal: boolean;
   setUserModal(value: boolean): void;
   LogoutHandler: () => void;
+  email?: string;
 }
 
-function UserModal({ userModal, setUserModal, LogoutHandler }: Props) {
+function UserModal({ userModal, setUserModal, LogoutHandler, email }: Props) {
   const onClick = () => {
     setUserModal(!userModal);
   };
@@ -71,7 +72,7 @@ function UserModal({ userModal, setUserModal, LogoutHandler }: Props) {
     <div>
       <ModalContainer>
         <ModalContent>
-          <Btn>유저 정보</Btn>
+          <Btn>{email}</Btn>
           <NavLink to="/profile">
             <Btn onClick={onClick}>회원 정보 수정</Btn>
           </NavLink>

@@ -8,6 +8,7 @@ import {
 } from '../SignupPage/SignupPage';
 import { UserLoginModal } from './UserLoginModal';
 import { WithdrawalModal } from './WithdrawalModal';
+import { NavLink } from 'react-router-dom';
 
 const UserSettingPageContainer = styled.div``;
 
@@ -15,7 +16,15 @@ const Body = styled.div`
   margin-top: 30vh;
 `;
 
-export const Profile = () => {
+interface Iprops {
+  userInfo: {
+    id?: number;
+    nickname?: string;
+    email?: string;
+  };
+}
+
+export const Profile = ({ userInfo }: Iprops) => {
   const [isLogin, setIsLogin] = useState(false);
   const [isWithdrawal, setIsWithdrawal] = useState(false);
 
@@ -29,7 +38,6 @@ export const Profile = () => {
 
   return (
     <UserSettingPageContainer>
-      {isLogin ? <UserLoginModal LoginModalHandler={LoginModalHandler} /> : ''}
       {isWithdrawal ? (
         <WithdrawalModal WithdrawalModalHandler={WithdrawalModalHandler} />
       ) : (
@@ -39,18 +47,19 @@ export const Profile = () => {
         <StyledDiv>
           <KeyInput>닉네임 :</KeyInput>
           <KeyInput style={{ paddingLeft: '0px' }}>
-            MYMY{/* 요청 데이터 */}
+            {userInfo.nickname}
           </KeyInput>
         </StyledDiv>
         <StyledDiv>
           <KeyInput>이메일 :</KeyInput>
-          <KeyInput style={{ paddingLeft: '0px' }}>
-            alsqha2626@gmail.com{/* 요청 데이터 */}
-          </KeyInput>
+          <KeyInput style={{ paddingLeft: '0px' }}>{userInfo.email}</KeyInput>
         </StyledDiv>
         <ButtonBox>
-          {/* <StyledButton>팀 관리</StyledButton> */}
-          <StyledButton onClick={LoginModalHandler}>회원정보수정</StyledButton>
+          <NavLink to="/userinfosetting">
+            <StyledButton onClick={LoginModalHandler}>
+              회원정보수정
+            </StyledButton>
+          </NavLink>
           <StyledButton onClick={WithdrawalModalHandler}>회원탈퇴</StyledButton>
         </ButtonBox>
       </Body>

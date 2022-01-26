@@ -15,15 +15,14 @@ const Todo = styled.div`
   min-height: 8vh;
   box-shadow: 1px 1px 2px rgb(184, 184, 184), -1px -1px 2px #ffffff;
   align-items: center;
-  cursor: pointer;
   > div > div.todoBtn {
     display: flex;
     justify-content: center;
-    /* align-items: center; */
+    align-items: center;
     font-size: large;
     font-weight: bold;
-    float: right;
     min-width: 50px;
+    height: 50px;
     color: rgba(0, 0, 0, 0);
     cursor: pointer;
   }
@@ -150,9 +149,6 @@ function Todos({
     <>
       <Todo
         style={select ? { color: 'gray', textDecoration: 'line-through' } : {}}
-        onClick={() => {
-          setIsCommentOpen(!isCommentOpen);
-        }}
       >
         <Box
           style={{
@@ -169,7 +165,12 @@ function Todos({
             {comment.length === 0 ? (
               ''
             ) : (
-              <BsChatLeftText style={{ margin: '20px' }} />
+              <BsChatLeftText
+                onClick={() => {
+                  setIsCommentOpen(!isCommentOpen);
+                }}
+                style={{ margin: '20px', cursor: 'pointer' }}
+              />
             )}
           </TodoInfo>
 
