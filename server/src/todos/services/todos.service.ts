@@ -6,20 +6,38 @@ import { Todo } from 'src/todos/entities/todo.entity';
 import { Injectable, ForbiddenException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Directory } from 'src/directories/entities/directory.entity';
 
 @Injectable()
 export class TodosService {
   constructor(
     @InjectRepository(Todo)
     private readonly todoRepository: Repository<Todo>,
-    private readonly userRepository: UserRepository
+    private readonly userRepository: UserRepository,
+    @InjectRepository(Directory)
+    private readonly directoryRepository: Repository<Directory>
   ) {}
 
-  async addTodoByUserId(userId: number, { content, deadline }: UserTodoAddDto) {
+  async addTodoByUserId(
+    userId: number,
+    { content, deadline, directoryId }: UserTodoAddDto
+  ) {
+    const directory =
+      directoryId === undefined
+        ? null
+        : await this.directoryRepository.findOneOrFail(directoryId, {
+            relations: ['user'],
+          });
+
+    if (directory !== null && directory.user.id !== userId) {
+      throw new ForbiddenException('자신의 Directory가 아닙니다.');
+    }
+
     return pickTodoData(
       await this.todoRepository.save({
         content,
         deadline,
+        directory,
         user: await this.userRepository.findOneOrFail(userId),
       })
     );
