@@ -34,7 +34,7 @@ export class TodosService {
       relations: ['user'],
     });
     if (todo.user.id !== userId) {
-      throw new ForbiddenException('자신의 todo가 아닙니다.');
+      throw new ForbiddenException('자신의 Todo가 아닙니다.');
     }
     if (content !== undefined) {
       todo.content = content;
@@ -56,7 +56,7 @@ export class TodosService {
       relations: ['user'],
     });
     if (todo.user.id !== userId) {
-      throw new ForbiddenException('자신의 todo가 아닙니다.');
+      throw new ForbiddenException('자신의 Todo가 아닙니다.');
     }
     todo.remove();
   }

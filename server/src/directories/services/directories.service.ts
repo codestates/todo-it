@@ -1,7 +1,7 @@
 import { Directory } from '../entities/directory.entity';
 import { UserDirectoryAddDto } from '../../users/dto/user-directory-add.dto';
 import { UserRepository } from '../../users/repositories/user.repository';
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { pickDirectoryData } from 'src/common/utils/pick-directory-data.util';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -28,5 +28,21 @@ export class DirectoriesService {
         user: await this.userRepository.findOneOrFail(userId),
       })
     );
+  }
+
+  async checkAndDeleteDirectoryByDirectoryId(
+    directoryId: number,
+    userId: number
+  ) {
+    const directory = await this.directoryRepository.findOneOrFail(
+      directoryId,
+      {
+        relations: ['user'],
+      }
+    );
+    if (directory.user.id !== userId) {
+      throw new ForbiddenException('자신의 Directory가 아닙니다.');
+    }
+    directory.remove();
   }
 }

@@ -4,9 +4,12 @@ import { JwtAuthGuard } from 'src/auth/jwt/jwt-auth.guard';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
+  Param,
+  ParseIntPipe,
   Post,
   UseGuards,
 } from '@nestjs/common';
@@ -32,6 +35,18 @@ export class UsersMeDirectoriesController {
     return this.directoriesService.addDirectoryByUserId(
       userId,
       userDirectoryAddDto
+    );
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async deleteTodo(
+    @CurrentUser() { userId }: JwtValidatePayload,
+    @Param('id', ParseIntPipe) directoryId: number
+  ) {
+    await this.directoriesService.checkAndDeleteDirectoryByDirectoryId(
+      directoryId,
+      userId
     );
   }
 }
