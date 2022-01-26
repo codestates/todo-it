@@ -1,5 +1,5 @@
 import { Todo } from '../../todos/entities/todo.entity';
-import { IsBoolean, IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { CommonEntity } from 'src/common/entities/common.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
 

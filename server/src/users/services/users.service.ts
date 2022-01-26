@@ -1,5 +1,10 @@
+import { UserUpdateDto } from './../dto/user-update.dto';
 import { UserRepository } from '../repositories/user.repository';
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  ForbiddenException,
+} from '@nestjs/common';
 import { UserRegisterDto } from '../dto/user-register.dto';
 import { generateRandomNickname } from 'src/common/utils/generateRandomNickname';
 import { User } from '../entities/user.entity';
@@ -32,6 +37,23 @@ export class UsersService {
   async getUserById(userId: number) {
     const user = await this.userRepository.findOneOrFail(userId);
     return this.pickUserData(user);
+  }
+
+  async updateUserById(
+    userId: number,
+    { originalPassword, nickname, newPassword }: UserUpdateDto
+  ) {
+    const user = await this.userRepository.findOneOrFail(userId);
+    if (user.password !== originalPassword) {
+      throw new ForbiddenException('originalPassword가 유효하지 않습니다.');
+    }
+    if (newPassword !== undefined) {
+      user.password = newPassword;
+    }
+    if (nickname !== undefined) {
+      user.nickname = nickname;
+    }
+    return this.pickUserData(await user.save());
   }
 
   async deleteUserById(userId: number) {
