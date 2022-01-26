@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { SignupPage } from './pages/SignupPage/SignupPage';
@@ -13,14 +13,21 @@ import MainPage from './pages/MainPage/MainPage';
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
+  const [userInfo, setUserInfo] = useState({});
+
+  useEffect(() => {});
 
   const LoginHandler = () => {
-    setIsLogin(!isLogin);
+    setIsLogin(true);
+  };
+
+  const LogoutHandler = () => {
+    setIsLogin(false);
   };
 
   return (
     <BrowserRouter>
-      <Header></Header>
+      <Header LogoutHandler={LogoutHandler}></Header>
       <Routes>
         <Route
           path="/"
@@ -32,7 +39,8 @@ function App() {
             )
           }
         ></Route>
-        <Route path="signup" element={<SignupPage></SignupPage>} />
+        <Route path="/signup" element={<SignupPage></SignupPage>} />
+        <Route path="/profile" element={<Profile></Profile>} />
       </Routes>
     </BrowserRouter>
   );

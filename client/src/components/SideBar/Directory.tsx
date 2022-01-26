@@ -5,45 +5,63 @@ const Container = styled.div`
   &:focus {
     background-color: red;
   }
+  display: inline-flex;
+  flex-flow: row wrap;
   height: 70px;
   width: 95%;
-  background-color: #e4eaff;
+  padding: 3px;
   margin: 3px;
+  border-radius: 10px;
+  align-items: stretch;
+  background-color: #ebf1ff;
+  /* display: inline-flex;
+  flex-flow: row wrap;
+  height: 70px;
+  width: 95%;
+  padding: 3px;
+  border-radius: 10px;
+  margin: 3px;
+  background-color: #ebf1ff;
+  align-items: center; */
+  /* position: relative; */
 `;
 
-const Name = styled.div`
-  float: left;
-  padding: 20px;
-`;
+const Name = styled.div``;
 
 const DirectoryBtn = styled.div`
   &:hover {
     color: black;
   }
-  float: right;
-  padding: 20px;
-  width: 30px;
-  height: 30px;
+  /* width: 30px;
+  height: 30px; */
   color: rgba(0, 0, 0, 0);
 `;
 
 const Modal = styled.div`
-  height: 70px;
-  width: 95%;
+  height: 60px;
+  width: 50%;
+  display: block;
+  align-content: space-between;
   margin: 3px;
-  display: flex;
-  justify-content: space-between;
   background-color: #ffefef;
 `;
 
 const Delete = styled.div`
   /* margin-right: 30%;
   padding: 20%; */
+  width: 100%;
+
+  /* vertical-align: middle;
+  float: none; */
 `;
 
 const Edit = styled.div`
   /* margin-left: 30%;
   padding: 20%; */
+  width: 100%;
+
+  /* vertical-align: middle;
+  float: none; */
 `;
 
 const EditDelteBtnContainer = styled.div`
@@ -136,29 +154,30 @@ function Directory({ name, directories, setDirectories }: Props) {
         {name === 'Today' || name === 'All' ? null : (
           <DirectoryBtn onClick={DirectoryRightBtnClick}>...</DirectoryBtn>
         )}
-      </Container>
-      {click ? (
-        <Modal>
-          {edit || del ? null : (
-            <EditDelteBtnContainer>
-              <Edit onClick={EditClick}>수정하기</Edit>
-              <Delete onClick={DeleteClick}>삭제하기</Delete>
-            </EditDelteBtnContainer>
-          )}
 
-          {edit ? (
-            <EditBox>
-              <EditInput value={newName} onChange={onChange} />
-              <button onClick={EditBtnFunc}>수정</button>
-            </EditBox>
-          ) : null}
-          {del ? (
-            <DelBox>
-              <DelBtn onClick={DelBtnFunc}>삭제하기</DelBtn>
-            </DelBox>
-          ) : null}
-        </Modal>
-      ) : null}
+        {click ? (
+          <Modal>
+            {edit || del ? null : (
+              <EditDelteBtnContainer>
+                <Edit onClick={EditClick}>수정하기</Edit>
+                <Delete onClick={DeleteClick}>삭제하기</Delete>
+              </EditDelteBtnContainer>
+            )}
+
+            {edit ? (
+              <EditBox>
+                <EditInput value={newName} onChange={onChange} />
+                <button onClick={EditBtnFunc}>수정</button>
+              </EditBox>
+            ) : null}
+            {del ? (
+              <DelBox>
+                <DelBtn onClick={DelBtnFunc}>삭제하기</DelBtn>
+              </DelBox>
+            ) : null}
+          </Modal>
+        ) : null}
+      </Container>
     </div>
   );
 }

@@ -2,18 +2,22 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const AddContainer = styled.div`
-  line-height: 15vh;
+  /* line-height: 15vh; */
   width: 100%;
-  height: 15vh;
+  padding: 2vh 0;
   box-shadow: 1px 1px 2px rgb(184, 184, 184), -1px -1px 2px #ffffff;
 `;
 
-const DirectorySelect = styled.div``;
+const InputBox = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 
 const PlusBtnContainer = styled.div`
   height: 5vh;
   text-align: center;
   /* font-size: large; */
+  box-shadow: 1px 1px 2px rgb(184, 184, 184), -1px -1px 2px #ffffff;
   font-weight: bold;
   padding-top: 20px;
   padding-right: 20px;
@@ -23,29 +27,37 @@ const CalendarBtn = styled.input`
   /* all: unset;
   padding-left: 10px;
   padding-right: 10px; */
+  margin: 10px;
 `;
 
 const CancelBtn = styled.button`
   all: unset;
-  padding: 2px;
-  /* float: right; */
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+  cursor: pointer;
 `;
 
-const AddBtn = styled.button`
-  all: unset;
-  padding: 2px;
+const AddTodoInput = styled.textarea`
+  /* height: 3em; */
+  /* width: 20em; */
+  /* font-size: 18px; */
+  width: 20vw;
+  flex: 1;
+  margin: 10px;
 `;
 
-const AddTodoInput = styled.input`
-  height: 3em;
-  width: 20em;
-  font-size: 18px;
+const Warning = styled.div`
+  font-size: smaller;
+  color: red;
 `;
 
 interface todoListType {
   content: string;
   directory: string;
   Dday: string;
+  comment: string;
 }
 
 interface DirectoryListType {
@@ -64,6 +76,7 @@ function AddTodo({ directories, todoList, setTodoList }: Props) {
   const [name, setName] = useState('');
   const [calendarValue, setCalendarValue] = useState('');
   const [selectDirectory, setSelectDirectory] = useState('');
+  const [isEmpty, setIsEmpty] = useState(false);
   const AddBtnFunc = () => {
     setAddBtnClick(!addBtnClick);
   };
@@ -74,10 +87,20 @@ function AddTodo({ directories, todoList, setTodoList }: Props) {
 
   const TodoAddFunc = () => {
     //console.log(name, selectDirectory, calendarValue, selectDirectory);
+    if (
+      name.length === 0 ||
+      selectDirectory.length === 0 ||
+      calendarValue.length === 0
+    ) {
+      setIsEmpty(true);
+      return;
+    }
+    setIsEmpty(true);
     const todoObj = {
       content: name,
       directory: selectDirectory,
       Dday: calendarValue,
+      comment: '',
     };
     setTodoList([...todoList, todoObj]);
     setSelectDirectory('');
@@ -86,7 +109,7 @@ function AddTodo({ directories, todoList, setTodoList }: Props) {
     setAddBtnClick(false);
   };
 
-  const InputOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const InputOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     setName(value);
   };
@@ -107,25 +130,35 @@ function AddTodo({ directories, todoList, setTodoList }: Props) {
         <PlusBtnContainer onClick={AddBtnFunc}>+ New Todo</PlusBtnContainer>
       ) : (
         <AddContainer>
-          <select onChange={handleSelect}>
-            {[{ directory: '=== 선택 ===' }, ...directories].map(
-              (obj, index) => {
-                return (
-                  <option key={index} value={obj.directory}>
-                    {obj.directory}
-                  </option>
-                );
-              }
-            )}
-          </select>
-          <AddTodoInput onChange={InputOnChange} value={name}></AddTodoInput>
-          <CalendarBtn
-            type="date"
-            onChange={dateSelect}
-            value={calendarValue}
-          ></CalendarBtn>
-          <AddBtn onClick={TodoAddFunc}>확인</AddBtn>
-          <CancelBtn onClick={CancelFunc}>취소</CancelBtn>
+          <InputBox>
+            <select style={{ margin: '10px' }} onChange={handleSelect}>
+              {[{ directory: '=== 선택 ===' }, ...directories].map(
+                (obj, index) => {
+                  return (
+                    <option key={index} value={obj.directory}>
+                      {obj.directory}
+                    </option>
+                  );
+                }
+              )}
+            </select>
+            <div>
+              <AddTodoInput
+                onChange={InputOnChange}
+                value={name}
+              ></AddTodoInput>
+            </div>
+            <CalendarBtn
+              type="date"
+              onChange={dateSelect}
+              value={calendarValue}
+            ></CalendarBtn>
+            <CancelBtn onClick={TodoAddFunc}>확인</CancelBtn>
+            <CancelBtn onClick={CancelFunc}>취소</CancelBtn>
+          </InputBox>
+          <Warning style={isEmpty ? {} : { display: 'none' }}>
+            내용과 D-day 를 모두 입력해주세요.
+          </Warning>
         </AddContainer>
       )}
     </>
