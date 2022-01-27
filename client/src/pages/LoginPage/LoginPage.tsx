@@ -44,7 +44,6 @@ export const LoginPage = ({ LoginHandler }: Iprops) => {
         }
       )
       .then((res) => {
-        console.log(res.data);
         LoginHandler(res.data.accessToken);
       })
       .catch((err) => {

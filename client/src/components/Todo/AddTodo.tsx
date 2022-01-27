@@ -2,15 +2,17 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
-export const AddContainer = styled.div`
-  background-color: #ececec;
+const AddContainer = styled.div`
+  /* line-height: 15vh; */
+  background-color: #a8c4a6;
   height: 65px;
   width: 100%;
   padding: 1vh 0;
   vertical-align: middle;
+  /* box-shadow: 1px 1px 2px rgb(184, 184, 184), -1px -1px 2px #ffffff; */
 `;
 
-export const InputBox = styled.div`
+const InputBox = styled.div`
   display: flex;
   justify-content: center;
   vertical-align: middle;
@@ -27,23 +29,26 @@ const PlusBtnContainer = styled.div`
   font-family: 'Y_Spotlight';
   color: #616161;
   font-size: 16px;
+  /* font-size: large; */
+  /* box-shadow: 1px 1px 2px rgb(184, 184, 184), -1px -1px 2px #ffffff; */
   font-weight: middle;
   padding-top: 20px;
   padding-right: 20px;
   cursor: pointer;
 `;
-export const CalendarBtn = styled.input`
+const CalendarBtn = styled.input`
+  /* all: unset;
+  padding-left: 10px;
+  padding-right: 10px; */
   border: none;
   height: 38px;
   margin: 10px;
 `;
 
-export const CancelBtn = styled.button`
+const CancelBtn = styled.button`
   all: unset;
   &:hover {
     font-weight: bold;
-    background-color: #a8c4a6;
-    color: white;
   }
   font-family: 'IBMPlexSansKR-Light';
   font-weight: middle;
@@ -52,8 +57,7 @@ export const CancelBtn = styled.button`
   width: 45px;
   border: 1px solid none;
   border-radius: 10px;
-  color: black;
-  background-color: #fff;
+  background-color: #fafafa;
   cursor: pointer;
 `;
 
@@ -62,15 +66,14 @@ const AddTodoInput = styled.textarea`
   /* width: 20em; */
   /* font-size: 18px; */
   font-family: 'IBMPlexSansKR-Light';
-  font-size: 17px;
+  font-size: 18px;
   border: none;
   border-right: 0px;
   border-top: 0px;
   border-left: 0px;
   border-bottom: 0px;
-  padding: 5px;
   width: 20vw;
-  height: 30px;
+  height: 35px;
   flex: 1;
   margin: 10px;
 `;
@@ -124,17 +127,24 @@ function AddTodo({ directories, todoList, setTodoList }: Props) {
       return;
     }
     setIsEmpty(false);
-    const todoObj = {
-      content: name,
-      directory: selectDirectory,
-      Dday: calendarValue,
-      comment: '',
-    };
-    setTodoList([...todoList, todoObj]);
-    setSelectDirectory(-1);
-    setCalendarValue('');
-    setName('');
-    setAddBtnClick(false);
+
+    axios
+      .post(
+        'https://localhost:8000/users/me/todos',
+        {
+          content: name,
+          deadline: calendarValue,
+          directoryId: selectDirectory,
+        },
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        window.location.href = 'https://localhost:3000/';
+      })
+      .catch((e) => console.log(e));
   };
 
   const InputOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -150,21 +160,6 @@ function AddTodo({ directories, todoList, setTodoList }: Props) {
   const dateSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setCalendarValue(value);
-  };
-
-  const AddDirectory = () => {
-    axios.post(
-      'https://localhost:8000/users/me/todos',
-      {
-        content: name,
-        deadline: calendarValue,
-        directoryId: selectDirectory,
-      },
-      {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true,
-      }
-    );
   };
 
   return (
@@ -184,7 +179,7 @@ function AddTodo({ directories, todoList, setTodoList }: Props) {
               }}
               onChange={handleSelect}
             >
-              {[{ name: 'Directory', id: -1 }, ...directories].map(
+              {[{ name: 'Directory', id: -1 }, ...directories.slice(2)].map(
                 (obj, index) => {
                   return (
                     <option key={index} value={obj.id}>
