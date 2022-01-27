@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import '../../fonts/font.css';
-<<<<<<< css
 import { AiOutlineLeft } from 'react-icons/ai';
-=======
 import axios from 'axios';
->>>>>>> dev
+
 const Container = styled.div`
   &:hover {
     > div > div.btn {
