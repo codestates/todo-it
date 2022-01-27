@@ -124,24 +124,17 @@ function AddTodo({ directories, todoList, setTodoList }: Props) {
       return;
     }
     setIsEmpty(false);
-
-    axios
-      .post(
-        'https://localhost:8000/users/me/todos',
-        {
-          content: name,
-          deadline: calendarValue,
-          directoryId: selectDirectory,
-        },
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        }
-      )
-      .then((res) => {
-        window.location.href = 'https://localhost:3000/';
-      })
-      .catch((e) => console.log(e));
+    const todoObj = {
+      content: name,
+      directory: selectDirectory,
+      Dday: calendarValue,
+      comment: '',
+    };
+    setTodoList([...todoList, todoObj]);
+    setSelectDirectory(-1);
+    setCalendarValue('');
+    setName('');
+    setAddBtnClick(false);
   };
 
   const InputOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -157,6 +150,21 @@ function AddTodo({ directories, todoList, setTodoList }: Props) {
   const dateSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setCalendarValue(value);
+  };
+
+  const AddDirectory = () => {
+    axios.post(
+      'https://localhost:8000/users/me/todos',
+      {
+        content: name,
+        deadline: calendarValue,
+        directoryId: selectDirectory,
+      },
+      {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      }
+    );
   };
 
   return (

@@ -58,23 +58,24 @@ function MainPage({ userId }: Props) {
 
   useEffect(() => {
     axios
+      .get('https://localhost:8000/users/me/todos', {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      })
+      .then((res) => {
+        setTodo(res.data);
+        // console.log(todo);
+      })
+      .catch((e) => console.log(e));
+
+    axios
       .get('https://localhost:8000/users/me/directories', {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       })
       .then((res) => {
         setDirectories([...directories, ...res.data]);
-      })
-      .then(() => {
-        axios
-          .get('https://localhost:8000/users/me/todos', {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true,
-          })
-          .then((res) => {
-            setTodo(res.data);
-          })
-          .catch((e) => console.log(e));
+        console.log(res.data);
       })
       .catch((e) => console.log(e));
   }, []);
@@ -112,9 +113,8 @@ function MainPage({ userId }: Props) {
             ? todo.map((obj, index) => {
                 return (
                   <Todo
-                    key={obj.id}
-                    isDone={obj.isDone}
-                    id={obj.id}
+                    key={index}
+                    index={index}
                     todoList={todo}
                     setTodoList={setTodo}
                     content={obj.content}
@@ -127,15 +127,12 @@ function MainPage({ userId }: Props) {
               })
             : clickDirectory === -3
             ? todo
-                .filter(
-                  (todoObj) => todoObj.deadline === today + 'T00:00:00.000Z'
-                )
+                .filter((todoObj) => todoObj.deadline === today)
                 .map((obj, index) => {
                   return (
                     <Todo
-                      id={obj.id}
-                      key={obj.id}
-                      isDone={obj.isDone}
+                      key={index}
+                      index={index}
                       todoList={todo}
                       setTodoList={setTodo}
                       content={obj.content}
@@ -151,10 +148,9 @@ function MainPage({ userId }: Props) {
                 .map((obj, index) => {
                   return (
                     <Todo
-                      key={obj.id}
-                      id={obj.id}
+                      key={index}
+                      index={index}
                       todoList={todo}
-                      isDone={obj.isDone}
                       setTodoList={setTodo}
                       content={obj.content}
                       directoryId={obj.directoryId}
