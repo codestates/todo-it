@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
-const AddContainer = styled.div`
+export const AddContainer = styled.div`
   /* line-height: 15vh; */
   background-color: #a8c4a6;
   height: 65px;
@@ -12,7 +12,7 @@ const AddContainer = styled.div`
   /* box-shadow: 1px 1px 2px rgb(184, 184, 184), -1px -1px 2px #ffffff; */
 `;
 
-const InputBox = styled.div`
+export const InputBox = styled.div`
   display: flex;
   justify-content: center;
   vertical-align: middle;
@@ -29,26 +29,23 @@ const PlusBtnContainer = styled.div`
   font-family: 'Y_Spotlight';
   color: #616161;
   font-size: 16px;
-  /* font-size: large; */
-  /* box-shadow: 1px 1px 2px rgb(184, 184, 184), -1px -1px 2px #ffffff; */
   font-weight: middle;
   padding-top: 20px;
   padding-right: 20px;
   cursor: pointer;
 `;
-const CalendarBtn = styled.input`
-  /* all: unset;
-  padding-left: 10px;
-  padding-right: 10px; */
+export const CalendarBtn = styled.input`
   border: none;
   height: 38px;
   margin: 10px;
 `;
 
-const CancelBtn = styled.button`
+export const CancelBtn = styled.button`
   all: unset;
   &:hover {
     font-weight: bold;
+    background-color: #a8c4a6;
+    color: white;
   }
   font-family: 'IBMPlexSansKR-Light';
   font-weight: middle;
@@ -57,23 +54,22 @@ const CancelBtn = styled.button`
   width: 45px;
   border: 1px solid none;
   border-radius: 10px;
-  background-color: #fafafa;
+  color: black;
+  background-color: #fff;
   cursor: pointer;
 `;
 
 const AddTodoInput = styled.textarea`
-  /* height: 3em; */
-  /* width: 20em; */
-  /* font-size: 18px; */
   font-family: 'IBMPlexSansKR-Light';
-  font-size: 18px;
+  font-size: 17px;
   border: none;
   border-right: 0px;
   border-top: 0px;
   border-left: 0px;
   border-bottom: 0px;
+  padding: 5px;
   width: 20vw;
-  height: 35px;
+  height: 30px;
   flex: 1;
   margin: 10px;
 `;
@@ -167,7 +163,9 @@ function AddTodo({ directories, todoList, setTodoList }: Props) {
       {!addBtnClick ? (
         <PlusBtnContainer onClick={AddBtnFunc}>+ New Todo</PlusBtnContainer>
       ) : (
-        <AddContainer>
+        <AddContainer
+          style={{ boxShadow: '2px 2px 5px #b8b8b8, -2px -2px 5px #ffffff' }}
+        >
           <InputBox>
             <select
               style={{
