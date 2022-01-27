@@ -172,6 +172,33 @@ function Todos({
       .catch((e) => console.log(e));
   };
 
+  const [isCommentInput, setIsCommentInput] = useState(false);
+
+  const CommentInputHandler = () => {
+    setIsCommentInput(!isCommentInput);
+  };
+
+  const CommentHandler = () => {
+    axios
+      .patch(
+        `https://localhost:8000/users/me/todos/${id}`,
+        {
+          content: content,
+          comment: addComment,
+          isDone: isDone,
+        },
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        setIsCommentInput(false);
+        window.location.href = 'https://localhost:3000/';
+      })
+      .catch((e) => console.log(e));
+  };
+
   return (
     <>
       <Todo
@@ -222,8 +249,9 @@ function Todos({
 
       {click ? (
         <div>
-          <div onClick={TodoDelFunc}>삭제</div>
+          <div onClick={CommentInputHandler}>주석 남기기</div>
           <div onClick={TodoEditFunc}>수정</div>
+          <div onClick={TodoDelFunc}>삭제</div>
         </div>
       ) : null}
       {editBtn ? (
@@ -248,6 +276,21 @@ function Todos({
           <div onClick={EditFunc}>확인</div>
         </div>
       ) : null}
+      {isCommentInput ? (
+        <div style={{ display: 'flex' }}>
+          <div>코멘트 달기</div>
+          <input
+            type="text"
+            value={addComment}
+            onChange={(e) => {
+              setAddComment(e.target.value);
+            }}
+          />
+          <div onClick={CommentHandler}>확인</div>
+        </div>
+      ) : (
+        ''
+      )}
     </>
   );
 }
