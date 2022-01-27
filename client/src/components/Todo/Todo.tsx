@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Comment from './Comment';
 import { BsChatLeftText } from 'react-icons/bs';
+import axios from 'axios';
 
 const Todo = styled.div`
   &:hover {
@@ -66,21 +67,23 @@ interface DirectoryListType {
   name: string;
 }
 interface Props {
-  index: number;
+  id?: number;
   todoList: todoListType[];
   setTodoList(arr: todoListType[]): void;
   content?: string;
   directoryId?: number;
   Dday?: string;
+  isDone?: boolean;
   directories: DirectoryListType[];
   comment?: string;
 }
 
 function Todos({
-  index,
+  id,
   todoList,
   setTodoList,
   content,
+  isDone,
   directoryId,
   Dday,
   directories,
@@ -96,15 +99,30 @@ function Todos({
   const [isCommentOpen, setIsCommentOpen] = useState(false);
 
   const CheckboxClick = () => {
-    setSelect(!select);
+    axios
+      .patch(
+        `https://localhost:8000/users/me/todos/${id}`,
+        { content: content, comment: comment, isDone: !isDone, deadline: Dday },
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        window.location.href = 'https://localhost:3000/';
+      })
+      .catch((e) => console.log(e));
   };
 
   const TodoDelFunc = () => {
-    let newTodoList = [
-      ...todoList.slice(undefined, index),
-      ...todoList.slice(index + 1),
-    ];
-    setTodoList(newTodoList);
+    axios
+      .delete(`https://localhost:8000/users/me/todos/${id}`, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      })
+      .then((res) => {
+        window.location.href = 'https://localhost:3000/';
+      });
     setClick(false);
   };
 
@@ -130,27 +148,33 @@ function Todos({
   };
 
   const EditFunc = () => {
-    let newTodoList = [
-      ...todoList.slice(undefined, index),
-      ...[
+    // setTodoList(newTodoList);
+    axios
+      .patch(
+        `https://localhost:8000/users/me/todos/${id}`,
         {
           content: editName,
-          directory: selectDirectory,
-          Dday: calendarValue,
-          comment: addComment,
+          comment: comment,
+          isDone: isDone,
+          deadline: calendarValue,
         },
-      ],
-      ...todoList.slice(index + 1),
-    ];
-    setTodoList(newTodoList);
-    setClick(false);
-    setEditBtn(false);
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        setClick(false);
+        setEditBtn(false);
+        window.location.href = 'https://localhost:3000/';
+      })
+      .catch((e) => console.log(e));
   };
 
   return (
     <>
       <Todo
-        style={select ? { color: 'gray', textDecoration: 'line-through' } : {}}
+        style={isDone ? { color: 'gray', textDecoration: 'line-through' } : {}}
       >
         <Box
           style={{
@@ -159,7 +183,12 @@ function Todos({
             width: '5%',
           }}
         >
-          <Checkbox onChange={CheckboxClick} type="checkbox" select={select} />
+          <Checkbox
+            onChange={CheckboxClick}
+            type="checkbox"
+            select={select}
+            checked={isDone ? true : false}
+          />
         </Box>
         <Box>
           <TodoInfo style={{ flex: '1', maxWidth: '65%' }}>
@@ -179,7 +208,9 @@ function Todos({
           <TodoInfo style={{ padding: '0 40px' }}>
             {directories.filter((obj) => obj.id === directoryId)[0].name}
           </TodoInfo>
-          <TodoInfo style={{ padding: '0 40px' }}>{Dday}</TodoInfo>
+          <TodoInfo style={{ padding: '0 40px' }}>
+            {Dday?.slice(0, 10)}
+          </TodoInfo>
           <div className="todoBtn" onClick={onClick}>
             ...
           </div>
