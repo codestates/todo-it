@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
 const ModalBackdrop = styled.div`
   position: fixed;
@@ -8,41 +8,41 @@ const ModalBackdrop = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(0,0,0,0.8);
+  background-color: rgba(0, 0, 0, 0.8);
   display: grid;
   place-items: center;
 `;
 
 const ModalView = styled.div`
-    /* border-radius: 10px; */
-    background-color: #ffffff;
-    width: 500px;
-    height: 300px;
+  /* border-radius: 10px; */
+  background-color: #ffffff;
+  width: 500px;
+  height: 300px;
 
-    > div.close_btn {
-      /* padding: 5px; */
-      /* margin: 5px; */
-      background: red;
-      cursor: pointer;
-    }
+  > div.close_btn {
+    /* padding: 5px; */
+    /* margin: 5px; */
+    background: red;
+    cursor: pointer;
+  }
 
-    > div.desc {
-      background-color: #fff;
-      margin-top: 25px;
-      color: #4000c7;
-      text-align: center;
-    }
-    > div.button {
-      background: red;
-      cursor: pointer;
-      margin-right: 25px;
-      width: 100px;
-      height: 50px;
-      margin-left: 70%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+  > div.desc {
+    background-color: #fff;
+    margin-top: 25px;
+    color: #4000c7;
+    text-align: center;
+  }
+  > div.button {
+    background: red;
+    cursor: pointer;
+    margin-right: 25px;
+    width: 100px;
+    height: 50px;
+    margin-left: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const StyledDiv = styled.div`
@@ -50,56 +50,61 @@ const StyledDiv = styled.div`
   justify-content: center;
   height: 5vh;
   margin-top: 20px;
-`
+`;
 
 const ValueBox = styled.div`
   width: 150px;
-  display:flex;
+  display: flex;
   align-items: center;
-`
+`;
 
 const InputBox = styled.input`
   width: 150px;
-`
+`;
 
 interface Iprop {
   [index: string]: () => void;
 }
 
-export const UserLoginModal = ({LoginModalHandler}: Iprop) => {
-
-  const [userId, setUserId] = useState('')
-  const [password, setPassword] = useState('')
+export const UserLoginModal = ({ LoginModalHandler }: Iprop) => {
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
 
   const UserIdHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUserId(event.target.value)
-  }
+    setUserId(event.target.value);
+  };
 
   const PasswordHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value)
-  }
-
-  const LoginHandler = () => {
-    // TODO: 로그인 요청 보내기
-    // TODO: if ok => window.location.herf = localhost3000/
-  }
+    setPassword(event.target.value);
+  };
 
   return (
     <ModalBackdrop onClick={LoginModalHandler}>
       <ModalView onClick={(e) => e.stopPropagation()}>
-        <div className='close-btn' onClick={LoginModalHandler}>x</div>
-        <div className='desc'>본인 확인을 위해 한번 더 로그인 해주세요.</div>
+        <div className="close-btn" onClick={LoginModalHandler}>
+          x
+        </div>
+        <div className="desc">본인 확인을 위해 한번 더 로그인 해주세요.</div>
         <StyledDiv>
           <ValueBox>아이디 :</ValueBox>
-          <InputBox onChange={UserIdHandler} type="text" placeholder="아이디" value={userId}/>
+          <InputBox
+            onChange={UserIdHandler}
+            type="text"
+            placeholder="아이디"
+            value={userId}
+          />
         </StyledDiv>
         <StyledDiv>
           <ValueBox>비밀번호 :</ValueBox>
-          <InputBox onChange={PasswordHandler} type="password" value={password}/>
+          <InputBox
+            onChange={PasswordHandler}
+            type="password"
+            value={password}
+          />
         </StyledDiv>
-        <br/>
+        <br />
         <div className="button">로그인</div>
       </ModalView>
     </ModalBackdrop>
-  )
-}
+  );
+};

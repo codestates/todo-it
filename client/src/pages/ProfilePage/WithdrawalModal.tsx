@@ -100,7 +100,7 @@ export const WithdrawalModal = ({ WithdrawalModalHandler }: Iprop) => {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       })
-      .then(() => (window.location.href = 'https://localhost:3000/'))
+      .then(() => (window.location.href = './'))
       .catch((err) => console.log(err));
   };
 

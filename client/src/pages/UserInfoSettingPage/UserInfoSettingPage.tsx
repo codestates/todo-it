@@ -92,7 +92,7 @@ export const UserInfoSettingPage = ({ userInfo }: Iprops) => {
       )
       .then((res) => {
         console.log(res.data);
-        window.location.href = 'https://localhost:3000/';
+        window.location.href = './';
       })
       .catch((err) => {
         console.log(err);

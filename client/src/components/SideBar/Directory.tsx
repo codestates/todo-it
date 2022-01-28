@@ -161,7 +161,7 @@ function Directory({ id, clickDirectory, directories, name }: Props) {
       .then((res) => {
         setDel(false);
         setClick(false);
-        window.location.href = 'https://localhost:3000/';
+        window.location.href = './';
       })
       .catch((e) => console.log(e));
   };
@@ -175,7 +175,7 @@ function Directory({ id, clickDirectory, directories, name }: Props) {
       .then((res) => {
         setDel(false);
         setClick(false);
-        window.location.href = 'https://localhost:3000/';
+        window.location.href = './';
       })
       .catch((e) => console.log(e));
   };
