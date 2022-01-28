@@ -138,7 +138,7 @@ function AddTodo({ directories, todoList, setTodoList }: Props) {
         }
       )
       .then((res) => {
-        window.location.href = 'https://localhost:3000/';
+        window.location.href = './';
       })
       .catch((e) => console.log(e));
   };

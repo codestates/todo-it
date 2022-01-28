@@ -149,7 +149,7 @@ export const SignupPage = () => {
       .then((res) => {
         console.log(res.data);
         alert('회원가입이 완료되었습니다.');
-        window.location.href = 'https://localhost:3000/';
+        window.location.href = './';
       })
       .catch((err) => {
         alert(err);

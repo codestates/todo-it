@@ -246,7 +246,7 @@ function Todos({
       )
       .then((res) => {
         setIsCommentInput(false);
-        window.location.href = 'https://localhost:3000/';
+        window.location.href = './';
       })
       .catch((e) => console.log(e));
   };
